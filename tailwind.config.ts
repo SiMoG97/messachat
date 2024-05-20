@@ -54,6 +54,7 @@ const config = {
         foreground: "hsl(var(--card-foreground))",
       },
       white: {
+        50: "var(--white-50)",
         100: "var(--white-100)",
         200: "var(--white-200)",
       },

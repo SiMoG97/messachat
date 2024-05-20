@@ -1,38 +1,49 @@
-import { DotsIcons } from "@/components/SVGs/Dots";
+import { DotsIcon } from "@/components/SVGs/Dots";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 
-export function Dropdown() {
+export type MenuItemT = {
+  label: string;
+  clickHandler: () => any;
+};
+
+type DropdownPropsT = {
+  menuItems: MenuItemT[];
+};
+export function Dropdown({ menuItems }: DropdownPropsT) {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+      {/* <div className="relative"> */}
       <DropdownMenuTrigger asChild>
-        <Button variant={null}>
-          <DotsIcons />
+        <Button
+          variant={null}
+          className={cn("active:bg-white-50 size-10 rounded-full ", {
+            "bg-white-50": isOpen,
+          })}
+          size={null}
+        >
+          <DotsIcon className="fill-grey-100" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-grey-300 w-56 rounded-none px-0 py-2">
+      <DropdownMenuContent className="bg-grey-300 absolute right-[-32px] w-56 rounded-none border-none px-0 py-2 shadow-xl">
         <DropdownMenuGroup>
-          <DropdownMenuItem>New Group</DropdownMenuItem>
-          <DropdownMenuItem>New Community</DropdownMenuItem>
-          <DropdownMenuItem>Starred messages</DropdownMenuItem>
-          <DropdownMenuItem>Select chats</DropdownMenuItem>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>Log out</DropdownMenuItem>
+          {menuItems.map((item) => (
+            <DropdownMenuItem onClick={item.clickHandler} key={item.label}>
+              {item.label}
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuGroup>
       </DropdownMenuContent>
+      {/* </div> */}
     </DropdownMenu>
   );
 }
