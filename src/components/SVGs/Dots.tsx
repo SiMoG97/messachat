@@ -1,4 +1,4 @@
-import React, { SVGProps } from "react";
+import React, { type SVGProps } from "react";
 import { cn } from "@/lib/utils";
 
 export function DotsIcon({ className, ...props }: SVGProps<SVGSVGElement>) {

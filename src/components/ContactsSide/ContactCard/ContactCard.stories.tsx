@@ -19,7 +19,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const witoutNotification: Story = {
+export const WitoutNotification: Story = {
   args: {
     selected: false,
     date: "5/11/2024",
@@ -30,7 +30,7 @@ export const witoutNotification: Story = {
   },
 };
 
-export const withNotification: Story = {
+export const WithNotification: Story = {
   args: {
     selected: false,
     date: "11:33 AM",
@@ -52,7 +52,7 @@ export const Selected: Story = {
   },
 };
 
-export const noProfilePic: Story = {
+export const NoProfilePic: Story = {
   args: {
     date: "Yesterday",
     username: "Simo Echaarani",

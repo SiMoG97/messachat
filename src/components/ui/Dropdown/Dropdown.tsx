@@ -12,7 +12,7 @@ import { useState } from "react";
 
 export type MenuItemT = {
   label: string;
-  clickHandler: () => any;
+  clickHandler: () => void;
 };
 
 type DropdownPropsT = {
@@ -26,7 +26,7 @@ export function Dropdown({ menuItems }: DropdownPropsT) {
       <DropdownMenuTrigger asChild>
         <Button
           variant={null}
-          className={cn("active:bg-white-50 size-10 rounded-full ", {
+          className={cn("size-10 rounded-full active:bg-white-50 ", {
             "bg-white-50": isOpen,
           })}
           size={null}
@@ -34,7 +34,7 @@ export function Dropdown({ menuItems }: DropdownPropsT) {
           <DotsIcon className="fill-grey-100" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-grey-300 absolute right-[-32px] w-56 rounded-none border-none px-0 py-2 shadow-xl">
+      <DropdownMenuContent className="absolute right-[-32px] w-56 rounded-none border-none bg-grey-300 px-0 py-2 shadow-xl">
         <DropdownMenuGroup>
           {menuItems.map((item) => (
             <DropdownMenuItem onClick={item.clickHandler} key={item.label}>

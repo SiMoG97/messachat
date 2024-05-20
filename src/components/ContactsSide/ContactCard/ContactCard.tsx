@@ -1,6 +1,5 @@
 import { CircleImage } from "@/components/ui/CircleImage/CircleImage";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import React from "react";
 
 export type ContactCardPropT = {
@@ -22,7 +21,7 @@ export function ContactCard({
   return (
     <div
       className={cn(
-        "bg-grey-600 flex h-[72px] w-full cursor-pointer items-center gap-4 px-4 ",
+        "flex h-[72px] w-full cursor-pointer items-center gap-4 bg-grey-600 px-4 ",
         {
           "bg-grey-200": selected,
           "hover:bg-grey-300": !selected,
@@ -31,7 +30,7 @@ export function ContactCard({
     >
       <CircleImage src={ppUrl} alt={`${username}'s profile picture`} />
       {/* max-w calcs 100% width - the gap size - the profile pic size */}
-      <div className="border-myBorder flex h-full max-w-[calc(100%-2.75rem-1rem)] flex-1 flex-col justify-center border-b-[1px]">
+      <div className="flex h-full max-w-[calc(100%-2.75rem-1rem)] flex-1 flex-col justify-center border-b-[1px] border-myBorder">
         <div className="flex justify-between">
           <div
             className={cn("text-3md text-white-100", {
@@ -52,15 +51,15 @@ export function ContactCard({
         <div className="flex justify-between gap-3">
           <div
             className={cn(
-              "text-3sm text-grey-100 truncate",
-              notificationNumber > 0 && "text-white-200 font-medium",
+              "truncate text-3sm text-grey-100",
+              notificationNumber > 0 && "font-medium text-white-200",
             )}
           >
             {lastMessage}
           </div>
           <div className="flex shrink-0  justify-end">
             {notificationNumber > 0 && (
-              <div className="bg-primary text-grey-600 text-2sm flex size-5  items-center justify-center rounded-full">
+              <div className="flex size-5 items-center justify-center rounded-full  bg-primary text-2sm text-grey-600">
                 {notificationNumber}
               </div>
             )}

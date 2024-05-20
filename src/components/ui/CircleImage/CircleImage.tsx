@@ -1,7 +1,7 @@
 import Image from "next/image";
-import React, { ComponentProps } from "react";
+import React, { type ComponentProps } from "react";
 import pp_placeholder from "@/../public/pp_placeholder.webp";
-import { cva, VariantProps } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const circleImageVariants = cva(
@@ -36,7 +36,7 @@ export function CircleImage({
   return (
     <div className={cn(circleImageVariants({ size, className }))} {...props}>
       <Image
-        src={src || pp_placeholder}
+        src={src ?? pp_placeholder}
         alt={alt}
         className="object-cover"
         objectFit="cover"
