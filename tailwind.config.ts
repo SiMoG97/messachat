@@ -19,6 +19,7 @@ const config = {
     },
     colors: {
       border: "hsl(var(--border))",
+      myBorder: "var(--border-clr)",
       input: "hsl(var(--input))",
       ring: "hsl(var(--ring))",
       background: "hsl(var(--background))",

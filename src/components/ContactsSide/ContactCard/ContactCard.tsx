@@ -1,9 +1,9 @@
+import { CircleImage } from "@/components/ui/CircleImage/CircleImage";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
-import pp_placeholder from "@/../public/pp_placeholder.webp";
 
-type ContactCardPropT = {
+export type ContactCardPropT = {
   username: string;
   date: string;
   lastMessage: string;
@@ -22,24 +22,16 @@ export function ContactCard({
   return (
     <div
       className={cn(
-        "bg-grey-600 flex h-[72px] w-full cursor-pointer items-center gap-4 px-4 py-2",
+        "bg-grey-600 flex h-[72px] w-full cursor-pointer items-center gap-4 px-4 ",
         {
           "bg-grey-200": selected,
           "hover:bg-grey-300": !selected,
         },
       )}
     >
-      <div className="relative size-11 shrink-0 overflow-hidden rounded-full">
-        <Image
-          src={ppUrl || pp_placeholder}
-          alt={`${username}'s profile picture`}
-          className="object-cover"
-          objectFit="cover"
-          layout="fill"
-        />
-      </div>
+      <CircleImage src={ppUrl} alt={`${username}'s profile picture`} />
       {/* max-w calcs 100% width - the gap size - the profile pic size */}
-      <div className="max-w-[calc(100%-2.75rem-1rem)] flex-1">
+      <div className="border-myBorder flex h-full max-w-[calc(100%-2.75rem-1rem)] flex-1 flex-col justify-center border-b-[1px]">
         <div className="flex justify-between">
           <div
             className={cn("text-3md text-white-100", {
