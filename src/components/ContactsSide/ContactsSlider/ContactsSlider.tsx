@@ -16,8 +16,7 @@ export function ContactSlider({
   return (
     <div
       className={cn(
-        " bg-grey-600 absolute h-full w-full  transition md:static md:w-[40%] md:translate-x-0 lg:w-[30%]",
-        showContacts ? "translate-x-0" : "-translate-x-full",
+        " bg-grey-600 fixed h-full w-full   md:static md:w-[40%] md:translate-x-0 lg:w-[30%]",
       )}
     >
       <ContactsHeader />
