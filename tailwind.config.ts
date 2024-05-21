@@ -58,6 +58,7 @@ const config = {
         // 100: "var(--white-100)",
         // 200: "var(--white-200)",
         50: "#ffffff1a",
+        70: "#ffffff99",
         100: "#e9edef",
         200: "#d1d7db",
       },

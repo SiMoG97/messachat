@@ -88,3 +88,24 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .message-right + .message-left > div,
+  .message-left:nth-child(1) > div {
+    border-top-left-radius: 0;
+  }
+  .message-left + .message-right > div,
+  .message-right:nth-child(1) > div {
+    border-top-right-radius: 0;
+  }
+  .message-left + .message-right .tail-icon-span,
+  .message-right:nth-child(1) .tail-icon-span {
+    /* @apply block; */
+    display: block;
+  }
+  .message-right + .message-left .tail-icon-span,
+  .message-left:nth-child(1) .tail-icon-span {
+    /* @apply block; */
+    display: block;
+  }
+}
