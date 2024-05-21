@@ -70,6 +70,7 @@ const config = {
     fontSize: {
       sm: "11px",
       "2sm": "12px",
+      "2.5sm": "12px",
       "3sm": "14px",
       "4sm": "14.2px",
       "5sm": "14.5px",
