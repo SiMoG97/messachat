@@ -9,6 +9,15 @@ const meta = {
   parameters: {
     layout: "centered",
   },
+  argTypes: {
+    size: {
+      options: ["sm", "md", "lg", "xl"],
+      control: { type: "radio" },
+    },
+  },
+  args: {
+    src: profilePicScr.src,
+  },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
 
@@ -20,26 +29,14 @@ type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Sm: Story = {
-  args: {
-    size: "sm",
-    src: profilePicScr.src,
-  },
+  args: { size: "sm" },
 };
 export const Md: Story = {
-  args: {
-    size: "md",
-    src: profilePicScr.src,
-  },
+  args: { size: "md" },
 };
 export const Lg: Story = {
-  args: {
-    size: "lg",
-    src: profilePicScr.src,
-  },
+  args: { size: "lg" },
 };
 export const Xl: Story = {
-  args: {
-    size: "xl",
-    src: profilePicScr.src,
-  },
+  args: { size: "xl" },
 };

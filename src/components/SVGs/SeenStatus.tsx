@@ -43,6 +43,7 @@ export function TimeIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
     <svg
       // viewBox="0 0 16 15"
       width={16}
+      height={16}
       className={cn(className)}
       version="1.1"
       x="0px"
