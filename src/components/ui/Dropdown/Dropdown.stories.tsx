@@ -5,7 +5,7 @@ const meta = {
   title: "UI/Dropdown",
   component: Dropdown,
   parameters: {
-    layout: "padded",
+    layout: "centered",
   },
 } satisfies Meta<typeof Dropdown>;
 
