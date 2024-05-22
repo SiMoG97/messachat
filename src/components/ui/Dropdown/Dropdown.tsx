@@ -25,13 +25,13 @@ export function Dropdown({ menuItems }: DropdownPropsT) {
       {/* <div className="relative"> */}
       <DropdownMenuTrigger asChild>
         <Button
-          variant={null}
-          className={cn("size-10 rounded-full active:bg-white-50 ", {
-            "bg-white-50": isOpen,
-          })}
+          variant={"rounded"}
+          className={cn({ "bg-white-50": isOpen })}
           size={null}
         >
-          <DotsIcon className="fill-grey-100" />
+          <span className="text-grey-100">
+            <DotsIcon />
+          </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="absolute right-[-32px] w-56 rounded-none border-none bg-grey-300 px-0 py-2 shadow-xl">
