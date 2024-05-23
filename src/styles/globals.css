@@ -138,7 +138,6 @@
 /* Up arrow */
 ::-webkit-scrollbar-button:single-button:vertical:decrement {
   border-width: 0 var(--scroll-border) var(--scroll-border) var(--scroll-border);
-  /* border-width: 0 4px 3px 4px; */
   border-color: transparent transparent #374045 transparent;
 }
 

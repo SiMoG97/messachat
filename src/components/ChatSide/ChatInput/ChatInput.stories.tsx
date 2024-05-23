@@ -4,6 +4,9 @@ import { ChatTextareaForm } from "./ChatTextareaForm";
 const meta = {
   title: "Chat Side/Chat Textarea Form",
   component: ChatTextareaForm,
+  parameters: {
+    layout: "padded",
+  },
 } satisfies Meta<typeof ChatTextareaForm>;
 
 export default meta;
