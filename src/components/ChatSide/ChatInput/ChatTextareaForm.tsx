@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useRef, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { EmojiSvg, SendIcon } from "@/components/SVGs";
+import { useOnClickOutside } from "@/Hooks";
 
 const FormSchema = z.object({
   message: z.string(),
@@ -21,6 +22,13 @@ type FormInputsType = z.infer<typeof FormSchema>;
 export function ChatTextareaForm() {
   const [emojiOpen, setEmojiOpen] = useState(false);
   const taRef = useRef<HTMLTextAreaElement>(null);
+  const emojiRef = useRef<HTMLDivElement>(null);
+  const emojiButtonRef = useRef<HTMLButtonElement>(null);
+
+  useOnClickOutside(emojiRef, emojiButtonRef, () => {
+    setEmojiOpen(false);
+  });
+
   const form = useForm<FormInputsType>({
     resolver: zodResolver(FormSchema),
   });
@@ -56,6 +64,7 @@ export function ChatTextareaForm() {
             variant={null}
             onClick={() => setEmojiOpen((prev) => !prev)}
             type="button"
+            ref={emojiButtonRef}
           >
             <span
               className={cn("text-grey-100", {
@@ -66,10 +75,11 @@ export function ChatTextareaForm() {
               <EmojiSvg />
             </span>
           </Button>
-          <div className="absolute bottom-12">
+          <div className="absolute bottom-12" ref={emojiRef}>
             <EmojiPicker
               open={emojiOpen}
               theme={Theme.DARK}
+              // ref={}
               onEmojiClick={({ emoji }) => {
                 const taValue = form.getValues("message") ?? "";
                 form.setValue("message", taValue + emoji);
