@@ -29,6 +29,7 @@ const config = {
         DEFAULT: "#00a884",
         foreground: "hsl(var(--primary-foreground))",
       },
+      "primary-200": "#005c4b",
       secondary: {
         DEFAULT: "hsl(var(--secondary))",
         foreground: "hsl(var(--secondary-foreground))",
@@ -113,6 +114,10 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      backgroundImage: {
+        "chat-bg": "url('/chat_bg.png')",
+        // 'footer-texture': "url('/img/footer-texture.png')",
       },
     },
   },

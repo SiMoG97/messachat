@@ -26,7 +26,7 @@ export function Message({ direction, message, time, status }: MessagePropsT) {
         className={cn(
           "relative min-w-[86px] max-w-screen-sm rounded-[7.5px] pb-[8px] pl-[9px] pr-[7px] pt-[6px]",
           {
-            "bg-primary": direction === "right",
+            "bg-primary-200": direction === "right",
             "bg-grey-400": direction === "left",
           },
         )}
@@ -36,7 +36,7 @@ export function Message({ direction, message, time, status }: MessagePropsT) {
         </span>
         <div className="mb-[-3px] mt-[2px] flex justify-end">
           <div className="flex items-center gap-1">
-            <span className="text-white-70 text-sm">{time}</span>
+            <span className="text-sm text-white-70">{time}</span>
             <div
               className={cn("text-white-70", {
                 "text-[#53bdeb]": status === "seen",
@@ -50,7 +50,7 @@ export function Message({ direction, message, time, status }: MessagePropsT) {
         </div>
         <span
           className={cn("tail-icon-span absolute top-0 hidden text-[red]", {
-            "right-[-8px] text-primary": direction === "right",
+            "text-primary-200 right-[-8px]": direction === "right",
             "left-[-8px] text-grey-300": direction === "left",
           })}
         >

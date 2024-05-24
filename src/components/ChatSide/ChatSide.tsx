@@ -14,7 +14,7 @@ export function ChatSide({ showContacts, setShowContacts }: ChatSidePropsT) {
   return (
     <div
       className={cn(
-        " border-myBorder fixed h-full w-full border-l-[1px] transition md:static md:w-[60%] md:translate-x-0  md:transition-none lg:w-[70%]",
+        " fixed h-full w-full border-myBorder transition md:static md:w-[60%] md:translate-x-0 md:border-l-[1px]  md:transition-none lg:w-[70%]",
         {
           "translate-x-full": showContacts,
         },

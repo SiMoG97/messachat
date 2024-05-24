@@ -1,6 +1,9 @@
 import { type MenuItemT } from "@/components/ui/Dropdown";
 import { Header } from "@/components/ui/Header";
 import React from "react";
+import { ChatTextareaForm } from "../ChatTextareaForm";
+import { ConversationDisplayer } from "../ConversationDisplayer";
+import { Message } from "../Message";
 
 type ChatCompPropsT = {
   closeChat: () => void;
@@ -8,11 +11,16 @@ type ChatCompPropsT = {
 
 export function ChatComp({ closeChat }: ChatCompPropsT) {
   return (
-    <div className="h-full bg-[red]">
+    <div className="flex h-full flex-col bg-grey-600">
       <Header menuItems={menuItems} username="Super Mario">
         <span>some icon</span>
       </Header>
-      <button onClick={closeChat}>close chat</button>
+      <div className=" relative flex flex-1  flex-col overflow-y-auto">
+        <ConversationDisplayer />
+      </div>
+      <div>
+        <ChatTextareaForm />
+      </div>
     </div>
   );
 }
