@@ -77,6 +77,7 @@ const config = {
         600: "#111b21",
         700: "#182229",
       },
+      green: "#25d366",
     },
     fontSize: {
       sm: "11px",
@@ -88,7 +89,10 @@ const config = {
       md: "15px",
       "2md": "16px",
       "3md": "17px",
-      "4md": "19px",
+      "4md": "18px",
+      "5md": "19px",
+      lg: "24px",
+      xl: "80px",
     },
     extend: {
       borderRadius: {

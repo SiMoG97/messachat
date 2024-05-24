@@ -1,10 +1,11 @@
+"use client";
 import React, { useState } from "react";
 // import { ChatSide } from "@app/components/ChatSide";
 import { ChatSide } from "@/components/ChatSide";
 import { ContactsAside } from "@/components/ContactsSide";
 
 export function InterfaceWrapper() {
-  const [showContacts, setShowContacts] = useState(true);
+  const [showContacts, setShowContacts] = useState(false);
 
   return (
     <div className="h-svh w-full bg-black px-0 py-0 2xl:px-5 2xl:py-3">
