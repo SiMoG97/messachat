@@ -93,6 +93,7 @@ const config = {
       "4md": "18px",
       "5md": "19px",
       lg: "24px",
+      "2lg": "36px",
       xl: "80px",
     },
     extend: {

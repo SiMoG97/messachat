@@ -5,7 +5,7 @@ import { ChatSide } from "@/components/ChatSide";
 import { ContactsAside } from "@/components/ContactsSide";
 
 export function InterfaceWrapper() {
-  const [showContacts, setShowContacts] = useState(false);
+  const [showContacts, setShowContacts] = useState(true);
 
   return (
     <div className="h-svh w-full bg-black px-0 py-0 2xl:px-5 2xl:py-3">
