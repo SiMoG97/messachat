@@ -6,9 +6,15 @@ import {
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
 import DiscordProvider from "next-auth/providers/discord";
+import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
+import GithubProvider from "next-auth/providers/github";
+import TwitterProvider from "next-auth/providers/twitter";
 
 import { env } from "@/env";
 import { db } from "@/server/db";
+import { redirect, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -38,20 +44,42 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    session: ({ session, user, token }) => {
+      console.log("from auth.ts -> session: ", session);
+      console.log("from auth.ts -> user: ", user);
+      console.log("from auth.ts -> token: ", token);
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+        },
+      };
+    },
   },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+    // ,
+    // DiscordProvider({
+    //   clientId: env.DISCORD_CLIENT_ID,
+    //   clientSecret: env.DISCORD_CLIENT_SECRET,
+    // }),
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
+    // FacebookProvider({
+    //   clientId: env.FACEBOOK_CLIENT_ID,
+    //   clientSecret: env.FACEBOOK_CLIENT_SECRET,
+    // }),
+    // TwitterProvider({
+    //   clientId: env.TWITTER_CLIENT_ID,
+    //   clientSecret: env.TWITTER_CLIENT_SECRET,
+    // }),
+    // GithubProvider({
+    //   clientId: env.GITHUB_CLIENT_ID,
+    //   clientSecret: env.GITHUB_CLIENT_SECRET,
+    // }),
     /**
      * ...add more providers here.
      *
@@ -70,3 +98,17 @@ export const authOptions: NextAuthOptions = {
  * @see https://next-auth.js.org/configuration/nextjs
  */
 export const getServerAuthSession = () => getServerSession(authOptions);
+
+export async function loginIsRequiredServer() {
+  const session = await getServerAuthSession();
+
+  if (!session) return redirect("/login");
+}
+
+// export function loginIsRequiredClient() {
+//   if (typeof window !== "undefined") {
+//     const session = useSession();
+//     const router = useRouter();
+//     if (!session) router.push("/");
+//   }
+// }

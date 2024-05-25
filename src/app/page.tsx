@@ -1,6 +1,8 @@
 import { InterfaceWrapper } from "@/components/InterfaceWrapper";
+import { loginIsRequiredServer } from "@/server/auth";
 
-export default function HomePage() {
+export default async function HomePage() {
+  await loginIsRequiredServer();
   return (
     <div>
       <InterfaceWrapper />

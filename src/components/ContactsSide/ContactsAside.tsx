@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { type ContactCardPropT, ContactCard } from "./ContactCard";
 import { Header } from "../ui/Header";
 import { type MenuItemT } from "../ui/Dropdown";
+import { signOut } from "next-auth/react";
 
 type ContactCardPropsT = {
   setShowContacts: React.Dispatch<React.SetStateAction<boolean>>;
@@ -64,16 +65,14 @@ const menuItems: MenuItemT[] = [
     },
   },
   {
-    label: "Log out",
+    label: "Settings",
     clickHandler: () => {
       return;
     },
   },
   {
-    label: "Settings",
-    clickHandler: () => {
-      return;
-    },
+    label: "Log out",
+    clickHandler: async () => await signOut(),
   },
 ];
 // export default ContactCard;

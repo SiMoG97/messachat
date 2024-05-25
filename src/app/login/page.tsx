@@ -1,12 +1,22 @@
 import Image from "next/image";
 
-import { Button } from "@/components/ui/button";
-
-import { VscGithubInverted } from "react-icons/vsc";
-import { FaGoogle, FaFacebook, FaWhatsapp } from "react-icons/fa";
+import {
+  FaGoogle,
+  FaFacebook,
+  FaWhatsapp,
+  FaDiscord,
+  FaGithub,
+} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { SignInButton } from "./components/SignInButton";
+import { getServerAuthSession } from "@/server/auth";
+import { redirect } from "next/navigation";
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const session = await getServerAuthSession();
+  console.log(session);
+  if (session) return redirect("/");
+
   return (
     <div className="h-svh w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       {/* left */}
@@ -51,34 +61,55 @@ export default function LoginPage() {
             </p>
           </div>
           <div className="grid gap-4">
-            <Button
-              variant="outline"
-              className="border-1 hover:bg-green flex w-full items-center gap-2 bg-grey-300 text-3sm font-bold text-white-100  "
-            >
-              <FaGoogle />
+            <SignInButton
+              label="Continue with Google"
+              loginProviderName="google"
+              ProviderIcon={<FaGoogle />}
+            />
+            <SignInButton
+              label="Continue with Facebook"
+              loginProviderName="facebook"
+              ProviderIcon={<FaFacebook />}
+            />
+            <SignInButton
+              label="Continue with Discord"
+              loginProviderName="discord"
+              ProviderIcon={<FaDiscord />}
+            />
+            <SignInButton
+              label="Continue with Github"
+              loginProviderName="github"
+              ProviderIcon={<FaGithub />}
+            />
+            <SignInButton
+              label="Continue with Twitter"
+              loginProviderName="twitter"
+              ProviderIcon={<FaXTwitter />}
+            />
+            {/* 
               <span>Continue with Google</span>
-            </Button>
-            <Button
+            </SignInButton> */}
+            {/* <Button
               variant="outline"
               className="border-1 hover:bg-green flex w-full items-center gap-2 bg-grey-300 text-3sm font-bold text-white-100  "
             >
               <FaFacebook />
               <span>Continue with Facebook</span>
-            </Button>
-            <Button
+            </Button> */}
+            {/* <Button
               variant="outline"
               className="border-1 hover:bg-green flex w-full items-center gap-2 bg-grey-300 text-3sm font-bold text-white-100 "
             >
               <VscGithubInverted />
               <span>Continue with Github</span>
-            </Button>
-            <Button
+            </Button> */}
+            {/* <Button
               variant="outline"
               className="border-1 hover:bg-green flex w-full items-center gap-2 bg-grey-300 text-3sm font-bold text-white-100 "
             >
               <FaXTwitter />
               <span>Continue with X</span>
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

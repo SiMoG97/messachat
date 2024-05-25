@@ -12,7 +12,7 @@ import { useState } from "react";
 
 export type MenuItemT = {
   label: string;
-  clickHandler: () => void;
+  clickHandler: () => Promise<void> | void;
 };
 
 type DropdownPropsT = {
