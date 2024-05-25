@@ -105,11 +105,9 @@ export function ChatTextareaForm() {
                     {...field}
                     ref={taRef}
                     onKeyDown={async (e) => {
-                      // console.log(form.formState.isValid);
                       if (e.key === "Enter" && !e.shiftKey) {
                         e.preventDefault();
                         await form.handleSubmit(onSubmit)();
-                        // form.trigger()
                       }
                     }}
                   />
