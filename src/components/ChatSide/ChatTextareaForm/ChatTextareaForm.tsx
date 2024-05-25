@@ -14,7 +14,10 @@ import { EmojiSvg, SendIcon } from "@/components/SVGs";
 import { useOnClickOutside } from "@/Hooks";
 
 const FormSchema = z.object({
-  message: z.string(),
+  message: z
+    .string()
+    .transform((value) => value.replace(/\s+$/, ""))
+    .pipe(z.string().min(1)),
 });
 
 type FormInputsType = z.infer<typeof FormSchema>;
@@ -101,6 +104,14 @@ export function ChatTextareaForm() {
                     )}
                     {...field}
                     ref={taRef}
+                    onKeyDown={async (e) => {
+                      // console.log(form.formState.isValid);
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        await form.handleSubmit(onSubmit)();
+                        // form.trigger()
+                      }
+                    }}
                   />
                 </div>
               </FormControl>
@@ -111,11 +122,11 @@ export function ChatTextareaForm() {
           variant={null}
           type="submit"
           className="place-self-end px-0"
-          disabled={!taValue}
+          disabled={!form.formState.isValid}
         >
           <span
             className={cn("text-primary ", {
-              "text-grey-100": !taValue,
+              "text-grey-100": !form.formState.isValid,
             })}
           >
             <SendIcon />
