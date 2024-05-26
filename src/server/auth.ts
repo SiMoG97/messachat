@@ -79,10 +79,11 @@ export const authOptions: NextAuthOptions = {
     //   clientId: env.TWITTER_CLIENT_ID,
     //   clientSecret: env.TWITTER_CLIENT_SECRET,
     // }),
-    // GithubProvider({
-    //   clientId: env.GITHUB_CLIENT_ID,
-    //   clientSecret: env.GITHUB_CLIENT_SECRET,
-    // }),
+    GithubProvider({
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
+    }),
     /**
      * ...add more providers here.
      *
