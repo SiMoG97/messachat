@@ -13,7 +13,6 @@ import { redirect } from "next/navigation";
 
 export default async function LoginPage() {
   const session = await getServerAuthSession();
-  console.log(session);
   if (session) return redirect("/");
 
   return (

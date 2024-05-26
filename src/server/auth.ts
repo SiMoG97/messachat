@@ -42,10 +42,7 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user, token }) => {
-      console.log("from auth.ts -> session: ", session);
-      console.log("from auth.ts -> user: ", user);
-      console.log("from auth.ts -> token: ", token);
+    session: ({ session, user }) => {
       return {
         ...session,
         user: {
@@ -88,6 +85,11 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+  pages: {
+    signIn: "/login",
+    signOut: "/login",
+  },
+  debug: env.NODE_ENV === "development",
 };
 
 /**
@@ -101,13 +103,4 @@ export async function loginIsRequiredServer() {
   const session = await getServerAuthSession();
 
   if (!session) return redirect("/login");
-  // return redirect("/");
 }
-
-// export function loginIsRequiredClient() {
-//   if (typeof window !== "undefined") {
-//     const session = useSession();
-//     const router = useRouter();
-//     if (!session) router.push("/");
-//   }
-// }

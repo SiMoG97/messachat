@@ -19,7 +19,11 @@ export function SignInButton({
     <Button
       variant="outline"
       className="border-1 hover:bg-green flex w-full items-center gap-2 bg-grey-300 text-3sm font-bold text-white-100  "
-      onClick={() => signIn(loginProviderName)}
+      onClick={() =>
+        signIn(loginProviderName, {
+          callbackUrl: "/",
+        })
+      }
     >
       {ProviderIcon}
       <span>{label}</span>
