@@ -7,7 +7,6 @@ import {
   FaDiscord,
   FaGithub,
 } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
 import { SignInButton } from "./components/SignInButton";
 import { getServerAuthSession } from "@/server/auth";
 import { redirect } from "next/navigation";
@@ -81,35 +80,6 @@ export default async function LoginPage() {
               loginProviderName="github"
               ProviderIcon={<FaGithub />}
             />
-            <SignInButton
-              label="Continue with Twitter"
-              loginProviderName="twitter"
-              ProviderIcon={<FaXTwitter />}
-            />
-            {/* 
-              <span>Continue with Google</span>
-            </SignInButton> */}
-            {/* <Button
-              variant="outline"
-              className="border-1 hover:bg-green flex w-full items-center gap-2 bg-grey-300 text-3sm font-bold text-white-100  "
-            >
-              <FaFacebook />
-              <span>Continue with Facebook</span>
-            </Button> */}
-            {/* <Button
-              variant="outline"
-              className="border-1 hover:bg-green flex w-full items-center gap-2 bg-grey-300 text-3sm font-bold text-white-100 "
-            >
-              <VscGithubInverted />
-              <span>Continue with Github</span>
-            </Button> */}
-            {/* <Button
-              variant="outline"
-              className="border-1 hover:bg-green flex w-full items-center gap-2 bg-grey-300 text-3sm font-bold text-white-100 "
-            >
-              <FaXTwitter />
-              <span>Continue with X</span>
-            </Button> */}
           </div>
         </div>
       </div>
