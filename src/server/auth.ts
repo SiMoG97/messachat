@@ -67,11 +67,13 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
-    // FacebookProvider({
-    //   clientId: env.FACEBOOK_CLIENT_ID,
-    //   clientSecret: env.FACEBOOK_CLIENT_SECRET,
-    // }),
+    FacebookProvider({
+      clientId: env.FACEBOOK_CLIENT_ID,
+      clientSecret: env.FACEBOOK_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
+    }),
     // TwitterProvider({
     //   clientId: env.TWITTER_CLIENT_ID,
     //   clientSecret: env.TWITTER_CLIENT_SECRET,
@@ -103,6 +105,7 @@ export async function loginIsRequiredServer() {
   const session = await getServerAuthSession();
 
   if (!session) return redirect("/login");
+  // return redirect("/");
 }
 
 // export function loginIsRequiredClient() {
