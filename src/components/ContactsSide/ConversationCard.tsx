@@ -58,7 +58,6 @@ export default function ConversationCard({
         lastMessage={lastMessageText}
         image={otherUser?.image}
         notificationNumber={hasSeen ? 0 : 1}
-        // date={form(conversation.createdAt)}
         date={
           lastMessage?.createdAt
             ? format(new Date(lastMessage.createdAt), "p")

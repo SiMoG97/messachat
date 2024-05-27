@@ -36,11 +36,6 @@ export function ContactsSlider({
         .then(({ data }) => {
           console.log(data);
           router.push(`?conversationId=${data.id}`);
-          // router.push("",{
-
-          // })
-          // const {id} = data.data
-          // router.push(`/conversatons/${data.data.id}`);
         })
         .catch((e) => console.log(e))
         .finally(() => {
