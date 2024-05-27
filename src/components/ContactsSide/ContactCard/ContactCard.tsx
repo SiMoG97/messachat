@@ -1,23 +1,59 @@
+"use client";
 import { CircleImage } from "@/components/ui/CircleImage/CircleImage";
 import { cn } from "@/lib/utils";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useCallback, useState } from "react";
+import axios from "axios";
+import { type Conversation } from "@prisma/client";
 
 export type ContactCardPropT = {
-  username: string;
+  id: string;
+  name: string;
   date: string;
   lastMessage: string;
-  ppUrl?: string;
+  image?: string | null;
   selected?: boolean;
   notificationNumber: number;
 };
+
+// export type ContactCardPropT = User;
 export function ContactCard({
-  username,
+  id,
+  name,
   date,
-  ppUrl,
+  image,
   selected = false,
   lastMessage,
   notificationNumber = 0,
 }: ContactCardPropT) {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const hadnleClick = useCallback(() => {
+    setIsLoading(true);
+
+    axios
+      .post<Conversation>("/api/conversations", {
+        userId: id,
+        isGroup: false,
+        members: [],
+        name: "someweird name",
+      })
+      .then(({ data }) => {
+        console.log(data);
+        router.push(`?conversationId=${data.id}`);
+        // router.push("",{
+
+        // })
+        // const {id} = data.data
+        // router.push(`/conversatons/${data.data.id}`);
+      })
+      .catch((e) => console.log(e))
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [router, id]);
+
   return (
     <div
       className={cn(
@@ -27,8 +63,9 @@ export function ContactCard({
           "hover:bg-grey-300": !selected,
         },
       )}
+      onClick={hadnleClick}
     >
-      <CircleImage src={ppUrl} alt={`${username}'s profile picture`} />
+      <CircleImage src={image} alt={`${name}'s profile picture`} />
       {/* max-w calcs 100% width - the gap size - the profile pic size */}
       <div className="flex h-full max-w-[calc(100%-2.75rem-1rem)] flex-1 flex-col justify-center border-b-[1px] border-myBorder">
         <div className="flex justify-between">
@@ -37,7 +74,7 @@ export function ContactCard({
               "font-medium": notificationNumber > 0,
             })}
           >
-            {username}
+            {name}
           </div>
           <div
             className={cn(

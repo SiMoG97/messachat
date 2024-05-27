@@ -91,7 +91,6 @@ model Message {
 
   seenIds String[]
   seen    User[]   @relation("UsersSeenMessages")
-  // seen    User[]   @relation("Seen", fields: [seenIds], references: [id])
 
   conversationId String
   conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)

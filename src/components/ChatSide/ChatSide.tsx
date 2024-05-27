@@ -1,25 +1,26 @@
+"use client";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useEffect } from "react";
 import { WelcomeComp } from "./WelcomeComp";
 import { ChatComp } from "./ChatComp";
+import { useConversation } from "@/Hooks";
+import { useRouter } from "next/navigation";
 
-type ChatSidePropsT = {
-  // showContacts: boolean;
-  // setShowContacts: React.Dispatch<React.SetStateAction<boolean>>;
-};
-export function ChatSide({}: ChatSidePropsT) {
-  const showContacts = true;
+export function ChatSide() {
+  const { isOpen } = useConversation();
+
+  useCloseChatWithEscapeBtnKeyboard();
 
   return (
     <div
       className={cn(
         " fixed h-full w-full border-myBorder transition md:static md:w-[60%] md:translate-x-0 md:border-l-[1px]  md:transition-none lg:w-[70%]",
         {
-          "translate-x-full": showContacts,
+          "translate-x-full": !isOpen,
         },
       )}
     >
-      {showContacts ? <WelcomeComp /> : <ChatComp />}
+      {!isOpen ? <WelcomeComp /> : <ChatComp />}
       <br />
       <button
         className="block md:hidden"
@@ -30,3 +31,14 @@ export function ChatSide({}: ChatSidePropsT) {
     </div>
   );
 }
+
+const useCloseChatWithEscapeBtnKeyboard = () => {
+  const router = useRouter();
+  useEffect(() => {
+    const escaplePressHandler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") router.push("/");
+    };
+    window.addEventListener("keydown", escaplePressHandler);
+    return () => window.removeEventListener("keydown", escaplePressHandler);
+  }, [router]);
+};

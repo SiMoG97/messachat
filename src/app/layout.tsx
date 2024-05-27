@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/toaster";
 import "@/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
@@ -16,7 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

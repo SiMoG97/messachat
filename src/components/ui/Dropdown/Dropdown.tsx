@@ -15,7 +15,8 @@ import { useState } from "react";
 
 export type MenuItemT = {
   label: string;
-  clickHandler: () => Promise<void> | void;
+  clickHandler: () => Promise<void | undefined> | void;
+  // clickHandler:
 };
 
 type DropdownPropsT = {

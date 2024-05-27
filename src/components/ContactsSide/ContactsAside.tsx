@@ -1,16 +1,11 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { type ContactCardPropT, ContactCard } from "./ContactCard";
+import { ContactCard } from "./ContactCard";
 import { Header } from "../ui/Header";
+import { getUsers } from "@/actions/getUsers";
 
-type ContactCardPropsT = {
-  // setShowContacts: React.Dispatch<React.SetStateAction<boolean>>;
-  contacts?: ContactCardPropT[] | null;
-};
-export function ContactsAside({
-  // setShowContacts,
-  contacts,
-}: ContactCardPropsT) {
+export async function ContactsAside() {
+  const contacts = await getUsers();
   return (
     <div
       className={cn(
@@ -20,11 +15,13 @@ export function ContactsAside({
       <Header selectDropdown="currUser" />
       {contacts?.map((user) => (
         <ContactCard
-          key={user.username}
-          date={user.date}
-          lastMessage={user.lastMessage}
-          username={user.username}
-          notificationNumber={user.notificationNumber}
+          key={user.id}
+          id={user.id}
+          date={"19/10/2024"}
+          lastMessage={"Where have you been ???"}
+          image={user.image}
+          name={user.name ?? ""}
+          notificationNumber={2}
         />
       ))}
       <br />

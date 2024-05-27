@@ -22,7 +22,7 @@ const circleImageVariants = cva(
 );
 
 type CircleImagePropsT = {
-  src?: string;
+  src?: string | null;
   alt?: string;
 } & ComponentProps<"div"> &
   VariantProps<typeof circleImageVariants>;
