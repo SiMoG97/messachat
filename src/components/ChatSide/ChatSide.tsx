@@ -4,13 +4,12 @@ import { WelcomeComp } from "./WelcomeComp";
 import { ChatComp } from "./ChatComp";
 
 type ChatSidePropsT = {
-  showContacts: boolean;
-  setShowContacts: React.Dispatch<React.SetStateAction<boolean>>;
+  // showContacts: boolean;
+  // setShowContacts: React.Dispatch<React.SetStateAction<boolean>>;
 };
-export function ChatSide({ showContacts, setShowContacts }: ChatSidePropsT) {
-  const closeChat = () => {
-    setShowContacts(true);
-  };
+export function ChatSide({}: ChatSidePropsT) {
+  const showContacts = true;
+
   return (
     <div
       className={cn(
@@ -20,9 +19,12 @@ export function ChatSide({ showContacts, setShowContacts }: ChatSidePropsT) {
         },
       )}
     >
-      {showContacts ? <WelcomeComp /> : <ChatComp closeChat={closeChat} />}
+      {showContacts ? <WelcomeComp /> : <ChatComp />}
       <br />
-      <button className="block md:hidden" onClick={() => setShowContacts(true)}>
+      <button
+        className="block md:hidden"
+        //  onClick={closeChat}
+      >
         show Contacts
       </button>
     </div>

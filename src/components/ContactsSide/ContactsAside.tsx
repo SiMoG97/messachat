@@ -2,15 +2,13 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { type ContactCardPropT, ContactCard } from "./ContactCard";
 import { Header } from "../ui/Header";
-import { type MenuItemT } from "../ui/Dropdown";
-import { signOut } from "next-auth/react";
 
 type ContactCardPropsT = {
-  setShowContacts: React.Dispatch<React.SetStateAction<boolean>>;
+  // setShowContacts: React.Dispatch<React.SetStateAction<boolean>>;
   contacts?: ContactCardPropT[] | null;
 };
 export function ContactsAside({
-  setShowContacts,
+  // setShowContacts,
   contacts,
 }: ContactCardPropsT) {
   return (
@@ -19,7 +17,7 @@ export function ContactsAside({
         " fixed h-full w-full bg-grey-600   md:static md:w-[40%] md:translate-x-0 lg:w-[30%]",
       )}
     >
-      <Header menuItems={menuItems} />
+      <Header selectDropdown="currUser" />
       {contacts?.map((user) => (
         <ContactCard
           key={user.username}
@@ -32,47 +30,11 @@ export function ContactsAside({
       <br />
       <button
         className="block md:hidden"
-        onClick={() => setShowContacts(false)}
+        // onClick={() => setShowContacts(false)}
       >
         show Chat
       </button>
     </div>
   );
 }
-const menuItems: MenuItemT[] = [
-  {
-    label: "New group",
-    clickHandler: () => {
-      return;
-    },
-  },
-  {
-    label: "New community",
-    clickHandler: () => {
-      return;
-    },
-  },
-  {
-    label: "Starred messages",
-    clickHandler: () => {
-      return;
-    },
-  },
-  {
-    label: "Select chats",
-    clickHandler: () => {
-      return;
-    },
-  },
-  {
-    label: "Settings",
-    clickHandler: () => {
-      return;
-    },
-  },
-  {
-    label: "Log out",
-    clickHandler: async () => await signOut(),
-  },
-];
 // export default ContactCard;

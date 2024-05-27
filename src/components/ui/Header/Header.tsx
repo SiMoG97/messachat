@@ -2,18 +2,19 @@ import React, { type ComponentProps } from "react";
 
 import { CircleImage } from "@/components/ui/CircleImage";
 import profilePic from "@/../public/pp.jpg";
-import { type MenuItemT, Dropdown } from "@/components/ui/Dropdown";
+import { Dropdown } from "@/components/ui/Dropdown";
 import { cn } from "@/lib/utils";
+import { type SelectDropdownType } from "@/Hooks";
 
 type HeaderPropsT = {
   username?: string;
-  menuItems: MenuItemT[];
+  selectDropdown: SelectDropdownType;
 } & ComponentProps<"header">;
 export function Header({
   username,
-  menuItems,
   className,
   children,
+  selectDropdown,
   ...props
 }: HeaderPropsT) {
   return (
@@ -30,20 +31,8 @@ export function Header({
       </div>
       <div className="flex items-center gap-3">
         {children}
-        <Dropdown menuItems={menuItems} />
+        <Dropdown selectDropdown={selectDropdown} />
       </div>
     </header>
   );
 }
-
-// const menuItems: MenuItemT[] = [
-//   { label: "Contact info", clickHandler: () => {} },
-//   { label: "Select messages", clickHandler: () => {} },
-//   { label: "Close chat", clickHandler: () => {} },
-//   { label: "Mute notifications", clickHandler: () => {} },
-//   { label: "Disappearing messages", clickHandler: () => {} },
-//   { label: "Clear chat", clickHandler: () => {} },
-//   { label: "Delete chat", clickHandler: () => {} },
-//   { label: "Report", clickHandler: () => {} },
-//   { label: "Block", clickHandler: () => {} },
-// ];

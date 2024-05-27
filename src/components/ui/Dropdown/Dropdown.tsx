@@ -1,3 +1,6 @@
+"use client";
+import { useRemoveWeirdFbUrlString } from "@/Hooks";
+import { type SelectDropdownType, useDropdown } from "@/Hooks/useDropdown";
 import { DotsIcon } from "@/components/SVGs/Dots";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,10 +19,14 @@ export type MenuItemT = {
 };
 
 type DropdownPropsT = {
-  menuItems: MenuItemT[];
+  // menuItems: MenuItemT[];
+  selectDropdown: SelectDropdownType;
 };
-export function Dropdown({ menuItems }: DropdownPropsT) {
+export function Dropdown({ selectDropdown }: DropdownPropsT) {
+  const menuItems = useDropdown(selectDropdown);
   const [isOpen, setIsOpen] = useState(false);
+  useRemoveWeirdFbUrlString();
+
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       {/* <div className="relative"> */}
