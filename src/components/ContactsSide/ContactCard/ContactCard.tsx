@@ -1,11 +1,7 @@
 "use client";
 import { CircleImage } from "@/components/ui/CircleImage/CircleImage";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
-import React, { useCallback, useState } from "react";
-import axios from "axios";
-import { type Conversation } from "@prisma/client";
-import { useSession } from "next-auth/react";
+import React from "react";
 
 export type ContactCardPropT = {
   id: string;
@@ -15,9 +11,9 @@ export type ContactCardPropT = {
   image?: string | null;
   selected?: boolean;
   notificationNumber: number;
+  handleClick: () => void;
 };
 
-// export type ContactCardPropT = User;
 export function ContactCard({
   id,
   name,
@@ -26,36 +22,8 @@ export function ContactCard({
   selected = false,
   lastMessage,
   notificationNumber = 0,
+  handleClick,
 }: ContactCardPropT) {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  // const session = useSession();
-
-  const hadnleClick = useCallback(() => {
-    setIsLoading(true);
-
-    axios
-      .post<Conversation>("/api/conversations", {
-        userId: id,
-        isGroup: false,
-        members: [],
-        name: "someweird name",
-      })
-      .then(({ data }) => {
-        console.log(data);
-        router.push(`?conversationId=${data.id}`);
-        // router.push("",{
-
-        // })
-        // const {id} = data.data
-        // router.push(`/conversatons/${data.data.id}`);
-      })
-      .catch((e) => console.log(e))
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [router, id]);
-
   return (
     <div
       className={cn(
@@ -65,7 +33,7 @@ export function ContactCard({
           "hover:bg-grey-300": !selected,
         },
       )}
-      onClick={hadnleClick}
+      onClick={handleClick}
     >
       <CircleImage src={image} alt={`${name}'s profile picture`} />
       {/* max-w calcs 100% width - the gap size - the profile pic size */}

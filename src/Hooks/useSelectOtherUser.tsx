@@ -10,6 +10,6 @@ export function useSelectOtherUser(
 
   return useMemo(() => {
     const currUserEmail = session.data?.user?.email;
-    return conversation.users.filter((user) => user.email !== currUserEmail);
+    return conversation.users.filter((user) => user.email !== currUserEmail)[0];
   }, [session.data?.user?.email, conversation.users]);
 }

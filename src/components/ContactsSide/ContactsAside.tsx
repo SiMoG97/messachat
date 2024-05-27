@@ -12,14 +12,25 @@ import { type User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { Button } from "../ui/button";
 import { NewConversation } from "../SVGs";
+import { type ConversationType } from "@/types";
+import ConversationCard from "./ConversationCard";
 
-export function ContactsAside({ contacts }: { contacts: User[] }) {
+type ContactsAsidePropsT = {
+  contacts: User[];
+  initConversations: ConversationType[];
+};
+
+export function ContactsAside({
+  contacts,
+  initConversations,
+}: ContactsAsidePropsT) {
+  const [conversations, setConversations] = useState(initConversations);
   // const contacts = await getUsers();
   // const conversations = await getCurrentUserConversations();
   // const currUser = await getCurrentUser();
   const session = useSession();
 
-  const [contactsSliderOpen, setContactsSliderOpen] = useState(true);
+  const [contactsSliderOpen, setContactsSliderOpen] = useState(false);
   return (
     <div
       className={cn(
@@ -37,6 +48,9 @@ export function ContactsAside({ contacts }: { contacts: User[] }) {
             </span>
           </Button>
         </Header>
+        {conversations.map((conversation) => (
+          <ConversationCard key={conversation.id} conversation={conversation} />
+        ))}
         <ContactsSlider
           contacts={contacts}
           isOpen={contactsSliderOpen}
