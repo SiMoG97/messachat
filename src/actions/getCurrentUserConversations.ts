@@ -1,7 +1,7 @@
 import { db } from "@/server/db";
 import { getCurrentUser } from "./getCurrentUser";
 
-export async function getConversations() {
+export async function getCurrentUserConversations() {
   const currentUser = await getCurrentUser();
   if (!currentUser?.id) return [];
 

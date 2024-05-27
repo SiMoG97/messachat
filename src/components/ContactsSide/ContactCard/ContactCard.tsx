@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { useCallback, useState } from "react";
 import axios from "axios";
 import { type Conversation } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 export type ContactCardPropT = {
   id: string;
@@ -28,6 +29,7 @@ export function ContactCard({
 }: ContactCardPropT) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  // const session = useSession();
 
   const hadnleClick = useCallback(() => {
     setIsLoading(true);

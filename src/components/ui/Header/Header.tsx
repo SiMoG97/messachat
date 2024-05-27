@@ -5,15 +5,18 @@ import profilePic from "@/../public/pp.jpg";
 import { Dropdown } from "@/components/ui/Dropdown";
 import { cn } from "@/lib/utils";
 import { type SelectDropdownType } from "@/Hooks";
+// import { type User } from "@prisma/client";
 
 type HeaderPropsT = {
   username?: string;
+  image?: string | null;
   selectDropdown: SelectDropdownType;
 } & ComponentProps<"header">;
 export function Header({
   username,
   className,
   children,
+  image,
   selectDropdown,
   ...props
 }: HeaderPropsT) {
@@ -26,7 +29,7 @@ export function Header({
       {...props}
     >
       <div className="flex items-center gap-3">
-        <CircleImage size={"sm"} src={profilePic.src} />
+        <CircleImage size={"sm"} src={image} />
         <div className="text-2md font-semibold">{username}</div>
       </div>
       <div className="flex items-center gap-3">

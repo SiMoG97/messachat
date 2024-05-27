@@ -5,10 +5,13 @@ import { WelcomeComp } from "./WelcomeComp";
 import { ChatComp } from "./ChatComp";
 import { useConversation } from "@/Hooks";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export function ChatSide() {
   const { isOpen } = useConversation();
 
+  const session = useSession();
+  console.log(session);
   useCloseChatWithEscapeBtnKeyboard();
 
   return (
