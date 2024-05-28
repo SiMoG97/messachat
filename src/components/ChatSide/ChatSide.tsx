@@ -6,7 +6,7 @@ import { useCloseChatWithEscapeBtnKeyboard, useConversation } from "@/Hooks";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { type User, type Conversation, type Message } from "@prisma/client";
-import { type MessageType } from "@/types";
+import { type ConversationType, type MessageType } from "@/types";
 import { Header } from "../ui/Header";
 import { ConversationDisplayer } from "./ConversationDisplayer";
 import { ChatTextareaForm } from "./ChatTextareaForm";
@@ -57,7 +57,10 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
           ></Header>
         </div>
         <div className=" relative flex flex-1  flex-col overflow-y-auto">
-          <ConversationDisplayer />
+          <ConversationDisplayer
+            initMessages={messages}
+            conversation={conversation}
+          />
         </div>
         <div>
           <ChatTextareaForm conversationId={conversation.id} />

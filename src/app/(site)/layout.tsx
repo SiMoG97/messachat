@@ -3,6 +3,7 @@ import getUsers from "@/actions/getUsers";
 import { ChatSide } from "@/components/ChatSide";
 import { ContactsAside } from "@/components/ContactsSide";
 import AuthContext from "@/context/AuthContext";
+import { loginIsRequiredServer } from "@/server/auth";
 import React from "react";
 
 export default async function HomeLayout({
@@ -10,6 +11,7 @@ export default async function HomeLayout({
 }: {
   children: React.ReactNode;
 }) {
+  await loginIsRequiredServer();
   const conversations = await getCurrentUserConversations();
   const contacts = await getUsers();
 

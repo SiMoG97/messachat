@@ -1,137 +1,67 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Message } from "../Message";
+import { type MessageType } from "@/types";
+import { useConversation } from "@/Hooks";
+import { format } from "date-fns";
+import { useSelectOtherUser } from "@/Hooks/useSelectOtherUser";
+import { useSession } from "next-auth/react";
+import { type User, type Conversation } from "@prisma/client";
+import axios from "axios";
 
-// type ConversationDisplayerPropsT = {};
+type ConversationDisplayerPropsT = {
+  initMessages: MessageType[];
+  conversation: Conversation & { users: User[] };
+};
 
-// export function ConversationDisplayer({}: ConversationDisplayerPropsT) {
-export function ConversationDisplayer() {
+export function ConversationDisplayer({
+  initMessages,
+  conversation,
+}: ConversationDisplayerPropsT) {
+  const [messages, setMesages] = useState(initMessages);
+  const scrollBottomRef = useRef<HTMLDivElement>(null);
+  const session = useSession();
+  const { conversationId } = useConversation();
+  const otherUser = useSelectOtherUser(conversation);
+
+  useEffect(() => {
+    axios
+      .post(`/api/conversations/${conversationId as string}/seen`)
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err));
+  }, [conversationId]);
+
+  const hadnleSeenStatus = (message: MessageType) => {
+    const filterredSeen = message.seen
+      .filter((user) => user.email !== session.data?.user.email)
+      .some((user) => user.email === otherUser?.email);
+    console.log(filterredSeen);
+
+    if (filterredSeen) return "seen";
+    return "delivered";
+  };
+
   return (
     <>
       {/* bg image */}
-      <div className="bg-chat-bg pointer-events-none absolute inset-0 h-full w-full opacity-5" />
+      <div className="pointer-events-none absolute inset-0 h-full w-full bg-chat-bg opacity-5" />
 
       {/* conversation */}
       <div className="overflow-y-auto py-5">
-        <Message
-          direction="left"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="right"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="right"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="right"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="left"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="left"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="left"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="right"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="left"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="right"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="left"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="right"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="left"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="right"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="left"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="right"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="left"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="right"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="left"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
-        <Message
-          direction="right"
-          message="hello how are you doing"
-          status="seen"
-          time="11:33 PM"
-        />
+        {messages.map((message) => (
+          <Message
+            key={message.id}
+            direction={
+              message.sender.email === session.data?.user.email
+                ? "right"
+                : "left"
+            }
+            message={message.body}
+            image={message.image}
+            status={hadnleSeenStatus(message)}
+            time={format(new Date(message.createdAt), "p")}
+          />
+        ))}
+        <div className="pt-24" ref={scrollBottomRef} />
       </div>
     </>
   );

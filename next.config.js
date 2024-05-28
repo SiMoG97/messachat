@@ -9,7 +9,7 @@ const config = {
   images: {
     remotePatterns: [
       { hostname: "lh3.googleusercontent.com" },
-      { hostname: "res.cloudinary.con" },
+      { hostname: "res.cloudinary.com" },
       { hostname: "avatars.githubusercontent.com" },
       { hostname: "platform-lookaside.fbsbx.com" },
       { hostname: "cdn.discordapp.com" },

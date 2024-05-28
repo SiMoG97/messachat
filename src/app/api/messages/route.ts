@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         conversation: { connect: { id: conversationId } },
         sender: { connect: { id: currentUser.id } },
         seen: { connect: { id: currentUser.id } },
-        seenIds: [currentUser.id],
+        // seenIds: [currentUser.id],
       },
       include: { seen: true, sender: true },
     });
@@ -56,6 +56,6 @@ export async function POST(req: Request) {
     return NextResponse.json(newMessage);
   } catch (error) {
     console.log("ERROR messages api route: ", error);
-    return new NextResponse("InternalError", { status: 500 });
+    return new NextResponse("InternalError Mesaages", { status: 500 });
   }
 }

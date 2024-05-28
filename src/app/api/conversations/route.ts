@@ -75,6 +75,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(newPrivateConversation);
   } catch (error) {
-    return new NextResponse("Internal Error", { status: 500 });
+    console.log("conversation");
+    return new NextResponse("Internal Error CONVERSATION", { status: 500 });
   }
 }
