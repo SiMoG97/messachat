@@ -3,15 +3,12 @@ import { cn } from "@/lib/utils";
 import React, { useEffect } from "react";
 import { WelcomeComp } from "./WelcomeComp";
 import { ChatComp } from "./ChatComp";
-import { useConversation } from "@/Hooks";
+import { useCloseChatWithEscapeBtnKeyboard, useConversation } from "@/Hooks";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 export function ChatSide() {
   const { isOpen } = useConversation();
-
-  const session = useSession();
-  console.log(session);
   useCloseChatWithEscapeBtnKeyboard();
 
   return (
@@ -23,25 +20,8 @@ export function ChatSide() {
         },
       )}
     >
-      {!isOpen ? <WelcomeComp /> : <ChatComp />}
-      <br />
-      <button
-        className="block md:hidden"
-        //  onClick={closeChat}
-      >
-        show Contacts
-      </button>
+      {/* {!isOpen ? <WelcomeComp /> : <ChatComp />} */}
+      <ChatComp />
     </div>
   );
 }
-
-const useCloseChatWithEscapeBtnKeyboard = () => {
-  const router = useRouter();
-  useEffect(() => {
-    const escaplePressHandler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") router.push("/");
-    };
-    window.addEventListener("keydown", escaplePressHandler);
-    return () => window.removeEventListener("keydown", escaplePressHandler);
-  }, [router]);
-};

@@ -1,6 +1,4 @@
-// "use client";
 import React from "react";
-// import { ChatSide } from "@app/components/ChatSide";
 import { ChatSide } from "@/components/ChatSide";
 import { ContactsAside } from "@/components/ContactsSide";
 import { getCurrentUserConversations } from "@/actions/getCurrentUserConversations";
@@ -9,9 +7,6 @@ import { getUsers } from "@/actions/getUsers";
 
 export async function InterfaceWrapper() {
   const conversations = await getCurrentUserConversations();
-  // console.log("\n\n\n===============================\n\n\n");
-  // console.log(conversations);
-  // console.log("\n\n\n===============================\n\n\n");
 
   const contacts = await getUsers();
   return (
@@ -22,10 +17,7 @@ export async function InterfaceWrapper() {
             initConversations={conversations}
             contacts={contacts}
           />
-          <ChatSide
-          // showContacts={showContacts}
-          // setShowContacts={setShowContacts}
-          />
+          <ChatSide />
         </AuthContext>
       </div>
     </div>
