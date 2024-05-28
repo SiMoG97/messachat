@@ -38,13 +38,14 @@ export default function ConversationCard({
     [session.data?.user?.email],
   );
 
-  const hasSeen = useMemo(() => {
-    if (!lastMessage || !userEmail) return false;
+  const numberOfNotifications = useMemo(() => {
+    if (!userEmail) return 0;
 
-    const seenArray = lastMessage.seen || [];
-
-    return seenArray.some((user) => user.email === userEmail);
-  }, [lastMessage, userEmail]);
+    return conversation.messages.filter(
+      (msg) =>
+        !msg.seen.some((user) => user.email === session.data?.user.email),
+    ).length;
+  }, [userEmail, conversation.messages, session.data?.user.email]);
 
   const lastMessageText = useMemo(() => {
     if (lastMessage?.image) return "Sent an image";
@@ -52,13 +53,18 @@ export default function ConversationCard({
     return "Start chatting!";
   }, [lastMessage?.body, lastMessage?.image]);
 
+  console.log(
+    conversation.messages.filter(
+      (msg) => !msg.seen.some((user) => user.id === session.data?.user.id),
+    ).length,
+  );
   return (
     <>
       <ContactCard
         id={conversation.id}
         lastMessage={lastMessageText}
         image={otherUser?.image}
-        notificationNumber={hasSeen ? 0 : 1}
+        notificationNumber={numberOfNotifications}
         date={
           lastMessage?.createdAt
             ? format(new Date(lastMessage.createdAt), "p")
