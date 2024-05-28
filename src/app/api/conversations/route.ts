@@ -1,19 +1,8 @@
 import { NextResponse } from "next/server";
 
-import { getCurrentUser } from "@/actions/getCurrentUser";
+import getCurrentUser from "@/actions/getCurrentUser";
 import { db } from "@/server/db";
 import { z } from "zod";
-
-// type Member = {
-//   value: string;
-// };
-
-// type RequestBody = {
-//   userId: string;
-//   isGroup: boolean;
-//   members: Member[];
-//   name: string;
-// };
 
 const requestBodySchema = z.object({
   userId: z.string(),

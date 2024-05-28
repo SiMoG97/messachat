@@ -4,7 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import EmojiPicker, { Theme } from "emoji-picker-react";
-
+import {
+  CldUploadButton,
+  type CloudinaryUploadWidgetInfo,
+  type CloudinaryUploadWidgetResults,
+} from "next-cloudinary";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,6 +16,9 @@ import { useRef, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { EmojiSvg, SendIcon } from "@/components/SVGs";
 import { useOnClickOutside } from "@/Hooks";
+import { BiImageAdd } from "react-icons/bi";
+import axios from "axios";
+import { AddPhotoIcon } from "@/components/SVGs/AddPhotoIcon";
 
 const FormSchema = z.object({
   message: z
@@ -22,7 +29,11 @@ const FormSchema = z.object({
 
 type FormInputsType = z.infer<typeof FormSchema>;
 
-export function ChatTextareaForm() {
+export function ChatTextareaForm({
+  conversationId,
+}: {
+  conversationId: string;
+}) {
   const [emojiOpen, setEmojiOpen] = useState(false);
   const taRef = useRef<HTMLTextAreaElement>(null);
   const emojiRef = useRef<HTMLDivElement>(null);
@@ -38,8 +49,20 @@ export function ChatTextareaForm() {
   const taValue = form.watch("message");
 
   function onSubmit(data: FormInputsType) {
-    console.log(data);
-    form.reset({ message: "" });
+    form.setValue("message", "", { shouldValidate: true });
+    axios
+      .post<{ message: string; conversationId: string; image: null }>(
+        "/api/messages",
+        {
+          ...data,
+          conversationId,
+          image: null,
+        },
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((e) => console.log(e));
   }
 
   const calcTaHeightHandler = (ta: HTMLTextAreaElement) => {
@@ -55,11 +78,31 @@ export function ChatTextareaForm() {
     calcTaHeightHandler(taRef.current);
   }, [taValue]);
 
+  const handleUploadImage = (result: CloudinaryUploadWidgetResults) => {
+    let imgUrl = null;
+    if (result.info && typeof result.info !== "string") {
+      imgUrl = result.info.secure_url;
+    }
+
+    axios
+      .post<{ image: string; conversationId: string; message: null }>(
+        "/api/messages",
+        {
+          image: imgUrl,
+          conversationId,
+          message: null,
+        },
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => console.log(e));
+  };
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex w-full items-center gap-4  bg-grey-300 px-6 py-2"
+        className="flex w-full items-center gap-6  bg-grey-300 px-6 py-2"
       >
         <div className="relative place-self-end">
           <Button
@@ -90,6 +133,15 @@ export function ChatTextareaForm() {
             />
           </div>
         </div>
+        <CldUploadButton
+          options={{ maxFiles: 1 }}
+          onSuccess={handleUploadImage}
+          uploadPreset="lr97df2p"
+        >
+          <span className=" relative top-[1px] text-grey-100">
+            <AddPhotoIcon />
+          </span>
+        </CldUploadButton>
         <FormField
           control={form.control}
           name="message"

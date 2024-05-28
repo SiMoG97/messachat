@@ -8,16 +8,18 @@ import { type SelectDropdownType } from "@/Hooks";
 // import { type User } from "@prisma/client";
 
 type HeaderPropsT = {
-  username?: string;
+  name?: string | null;
   image?: string | null;
   selectDropdown: SelectDropdownType;
+  status?: string;
 } & ComponentProps<"header">;
 export function Header({
-  username,
+  name,
   className,
   children,
   image,
   selectDropdown,
+  status,
   ...props
 }: HeaderPropsT) {
   return (
@@ -30,7 +32,10 @@ export function Header({
     >
       <div className="flex items-center gap-3">
         <CircleImage size={"sm"} src={image} />
-        <div className="text-2md font-semibold">{username}</div>
+        <div>
+          {name && <div className="text-2md font-semibold">{name}</div>}
+          {status && <div className="text-[13px] text-grey-100">{status}</div>}
+        </div>
       </div>
       <div className="flex items-center gap-3">
         {children}

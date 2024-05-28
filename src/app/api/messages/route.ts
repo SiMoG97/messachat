@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 const requestBodySchema = z.object({
-  message: z.string(),
+  message: z.string().nullable(),
   image: z.string().nullable(),
   conversationId: z.string(),
 });
@@ -21,6 +21,10 @@ export async function POST(req: Request) {
       await req.json(),
     );
 
+    if (!message && !image) {
+      return new NextResponse("Bad Request", { status: 400 });
+    }
+
     const newMessage = await db.message.create({
       data: {
         body: message,
@@ -28,6 +32,7 @@ export async function POST(req: Request) {
         conversation: { connect: { id: conversationId } },
         sender: { connect: { id: currentUser.id } },
         seen: { connect: { id: currentUser.id } },
+        seenIds: [currentUser.id],
       },
       include: { seen: true, sender: true },
     });
