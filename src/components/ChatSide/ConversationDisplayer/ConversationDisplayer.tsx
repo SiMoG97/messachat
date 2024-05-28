@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Message } from "../Message";
 import { type MessageType } from "@/types";
-import { useConversation } from "@/Hooks";
+import { useCloseWithEscape, useConversation } from "@/Hooks";
 import { format } from "date-fns";
 import { useSelectOtherUser } from "@/Hooks/useSelectOtherUser";
 import { useSession } from "next-auth/react";
 import { type User, type Conversation } from "@prisma/client";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 type ConversationDisplayerPropsT = {
   initMessages: MessageType[];
@@ -17,6 +18,12 @@ export function ConversationDisplayer({
   initMessages,
   conversation,
 }: ConversationDisplayerPropsT) {
+  // useCloseChatWithEscapeBtnKeyboard();
+  const router = useRouter();
+  useCloseWithEscape((e: KeyboardEvent) => {
+    if (e.key === "Escape") router.push("/");
+  });
+
   const [messages, setMesages] = useState(initMessages);
   const scrollBottomRef = useRef<HTMLDivElement>(null);
   const session = useSession();

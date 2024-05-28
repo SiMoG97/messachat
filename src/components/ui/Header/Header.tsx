@@ -2,7 +2,7 @@ import React, { type ComponentProps } from "react";
 
 import { CircleImage } from "@/components/ui/CircleImage";
 import profilePic from "@/../public/pp.jpg";
-import { Dropdown } from "@/components/ui/Dropdown";
+import { Dropdown, type MenuItemT } from "@/components/ui/Dropdown";
 import { cn } from "@/lib/utils";
 import { type SelectDropdownType } from "@/Hooks";
 // import { type User } from "@prisma/client";
@@ -10,16 +10,18 @@ import { type SelectDropdownType } from "@/Hooks";
 type HeaderPropsT = {
   name?: string | null;
   image?: string | null;
-  selectDropdown: SelectDropdownType;
   status?: string;
+  dropdownItems?: MenuItemT[];
+  profileClick?: () => void | null;
 } & ComponentProps<"header">;
 export function Header({
   name,
   className,
   children,
   image,
-  selectDropdown,
+  dropdownItems,
   status,
+  profileClick = () => null,
   ...props
 }: HeaderPropsT) {
   return (
@@ -30,16 +32,25 @@ export function Header({
       )}
       {...props}
     >
-      <div className="flex items-center gap-3">
-        <CircleImage size={"sm"} src={image} />
+      <div
+        className="flex cursor-pointer items-center gap-3"
+        onClick={profileClick}
+      >
+        {image && <CircleImage size={"sm"} src={image} />}
         <div>
-          {name && <div className="text-2md font-semibold">{name}</div>}
-          {status && <div className="text-[13px] text-grey-100">{status}</div>}
+          <>
+            {name && <div className="text-2md font-semibold">{name}</div>}
+            {status && (
+              <div className="text-[13px] text-grey-100">{status}</div>
+            )}
+          </>
         </div>
       </div>
       <div className="flex items-center gap-3">
-        {children}
-        <Dropdown selectDropdown={selectDropdown} />
+        <>
+          {children}
+          {dropdownItems && <Dropdown dropdownItems={dropdownItems} />}
+        </>
       </div>
     </header>
   );

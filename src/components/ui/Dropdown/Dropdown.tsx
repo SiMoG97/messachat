@@ -21,10 +21,11 @@ export type MenuItemT = {
 
 type DropdownPropsT = {
   // menuItems: MenuItemT[];
-  selectDropdown: SelectDropdownType;
+
+  dropdownItems: MenuItemT[];
 };
-export function Dropdown({ selectDropdown }: DropdownPropsT) {
-  const menuItems = useDropdown(selectDropdown);
+export function Dropdown({ dropdownItems }: DropdownPropsT) {
+  // const menuItems = useDropdown(selectDropdown);
   const [isOpen, setIsOpen] = useState(false);
   useRemoveWeirdFbUrlString();
 
@@ -42,9 +43,10 @@ export function Dropdown({ selectDropdown }: DropdownPropsT) {
           </span>
         </Button>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent className="absolute right-[-32px] w-56 rounded-none border-none bg-grey-300 px-0 py-2 shadow-xl">
         <DropdownMenuGroup>
-          {menuItems.map((item) => (
+          {dropdownItems.map((item) => (
             <DropdownMenuItem onClick={item.clickHandler} key={item.label}>
               {item.label}
             </DropdownMenuItem>
