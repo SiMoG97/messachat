@@ -1,7 +1,7 @@
 import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
 
-export async function getCurrentUser() {
+export default async function getCurrentUser() {
   try {
     const session = await getServerAuthSession();
 
