@@ -24,7 +24,8 @@ export default function ConversationCard({
   const router = useRouter();
 
   const handleClick = useCallback(() => {
-    router.push(`?conversationId=${conversation.id}`);
+    // router.push(`?conversationId=${conversation.id}`);
+    router.push(`/${conversation.id}`);
   }, [conversation.id, router]);
 
   const lastMessage = useMemo(() => {

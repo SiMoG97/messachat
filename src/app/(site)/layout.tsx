@@ -12,12 +12,7 @@ export default async function HomeLayout({
 }) {
   const conversations = await getCurrentUserConversations();
   const contacts = await getUsers();
-  // return (
-  //   <>
-  //     <div className="bg-[red]">red</div>
-  //     {children}
-  //   </>
-  // );
+
   return (
     <div className="h-svh w-full bg-black px-0 py-0 2xl:px-5 2xl:py-3">
       <div className=" bg-blue-400 mx-auto flex h-full w-full  max-w-[1700px] overflow-hidden md:flex-row">
