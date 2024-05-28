@@ -9,6 +9,7 @@ type AboutUserDrawerPropsT = {
   closeHandler: () => void;
   deleteChatHandler: () => void;
   user: User;
+  // isDialogOpen?:boolean;
 };
 
 export function AboutUserDrawer({

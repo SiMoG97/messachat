@@ -12,15 +12,18 @@ import { useRouter } from "next/navigation";
 type ConversationDisplayerPropsT = {
   initMessages: MessageType[];
   conversation: Conversation & { users: User[] };
+  isDialogOpen?: boolean;
 };
 
 export function ConversationDisplayer({
   initMessages,
   conversation,
+  isDialogOpen,
 }: ConversationDisplayerPropsT) {
   // useCloseChatWithEscapeBtnKeyboard();
   const router = useRouter();
   useCloseWithEscape((e: KeyboardEvent) => {
+    if (isDialogOpen) return;
     if (e.key === "Escape") router.push("/");
   });
 

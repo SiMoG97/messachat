@@ -15,6 +15,8 @@ import Link from "next/link";
 import { Arrow } from "../SVGs";
 import { type MenuItemT } from "../ui/Dropdown";
 import { AboutUserDrawer } from "../AboutUserDrawer";
+import { Dialog } from "../Dialog";
+import { FaLess } from "react-icons/fa";
 
 type ChatSidePropsT = {
   conversation: Conversation & { users: User[] };
@@ -25,8 +27,13 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
   const router = useRouter();
   const { isOpen } = useConversation();
   const otherUser = useSelectOtherUser(conversation);
-  const [contactInfoIsOpen, setContactInfoIsOpen] = useState(true);
+  const [contactInfoIsOpen, setContactInfoIsOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
+  const closeContactInfoHandler = () => {
+    if (dialogOpen) return;
+    setContactInfoIsOpen(false);
+  };
   const deleteChatHandler = () => {
     console.log("chat deleted");
   };
@@ -70,7 +77,9 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
       },
       {
         label: "Delete chat",
-        clickHandler: deleteChatHandler,
+        clickHandler: () => {
+          setDialogOpen(true);
+        },
       },
       {
         label: "Report",
@@ -96,48 +105,63 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
   }, [conversation.isGroup, conversation.users.length]);
 
   return (
-    <div
-      className={cn(
-        " fixed h-full w-full border-myBorder transition md:static md:w-[60%] md:translate-x-0 md:border-l-[1px]  md:transition-none lg:w-[70%]",
-        {
-          "translate-x-full": !isOpen,
-        },
-      )}
-    >
-      {!contactInfoIsOpen ? (
-        <div className="flex h-full flex-col bg-grey-600">
-          <div className="flex items-center bg-grey-300">
-            <Link href="/" className="block pl-3 md:hidden">
-              <span className="text-grey-100 hover:text-white-70 active:text-white-100">
-                <Arrow />
-              </span>
-            </Link>
-            <Header
-              name={otherUser?.name ?? conversation.name}
-              image={otherUser?.image}
-              className="flex-1"
-              status={status}
-              dropdownItems={dropDownItems}
-              profileClick={() => setContactInfoIsOpen(true)}
-            ></Header>
+    <>
+      <Dialog
+        title="Are you sure you want to delete this chat?"
+        variant="danger"
+        isOpen={dialogOpen}
+        description="some weird text just to test the values"
+        confirmText="Delete"
+        closeHandler={() => setDialogOpen(false)}
+        confirmHandler={() => {
+          console.log("first");
+        }}
+      />
+      <div
+        className={cn(
+          " fixed h-full w-full border-myBorder transition md:static md:w-[60%] md:translate-x-0 md:border-l-[1px]  md:transition-none lg:w-[70%]",
+          {
+            "translate-x-full": !isOpen,
+          },
+        )}
+      >
+        {!contactInfoIsOpen ? (
+          <div className="flex h-full flex-col bg-grey-600">
+            <div className="flex items-center bg-grey-300">
+              <Link href="/" className="block pl-3 md:hidden">
+                <span className="text-grey-100 hover:text-white-70 active:text-white-100">
+                  <Arrow />
+                </span>
+              </Link>
+              <Header
+                name={otherUser?.name ?? conversation.name}
+                image={otherUser?.image}
+                className="flex-1"
+                status={status}
+                dropdownItems={dropDownItems}
+                profileClick={() => setContactInfoIsOpen(true)}
+              ></Header>
+            </div>
+            <div className=" relative flex flex-1  flex-col overflow-y-auto">
+              <ConversationDisplayer
+                initMessages={messages}
+                conversation={conversation}
+                isDialogOpen={dialogOpen}
+              />
+            </div>
+            <div>
+              <ChatTextareaForm conversationId={conversation.id} />
+            </div>
           </div>
-          <div className=" relative flex flex-1  flex-col overflow-y-auto">
-            <ConversationDisplayer
-              initMessages={messages}
-              conversation={conversation}
-            />
-          </div>
-          <div>
-            <ChatTextareaForm conversationId={conversation.id} />
-          </div>
-        </div>
-      ) : (
-        <AboutUserDrawer
-          closeHandler={() => setContactInfoIsOpen(false)}
-          deleteChatHandler={deleteChatHandler}
-          user={otherUser}
-        />
-      )}
-    </div>
+        ) : (
+          <AboutUserDrawer
+            closeHandler={closeContactInfoHandler}
+            deleteChatHandler={() => setDialogOpen(true)}
+            user={otherUser}
+            // isDialogOpen={dialogOpen}
+          />
+        )}
+      </div>
+    </>
   );
 }
