@@ -31,6 +31,7 @@ export function CircleImage({
   alt = "",
   size,
   className,
+  children,
   ...props
 }: CircleImagePropsT) {
   return (
@@ -42,6 +43,7 @@ export function CircleImage({
         objectFit="cover"
         layout="fill"
       />
+      {children && children}
     </div>
   );
 }

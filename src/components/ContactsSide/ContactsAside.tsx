@@ -11,6 +11,7 @@ import { NewConversation } from "../SVGs";
 import { type ConversationType } from "@/types";
 import ConversationCard from "./ConversationCard";
 import { type MenuItemT } from "../ui/Dropdown";
+import SettingsAside from "./SettingsAside";
 
 type ContactsAsidePropsT = {
   contacts: User[];
@@ -25,6 +26,9 @@ export function ContactsAside({
   const session = useSession();
 
   const [contactsSliderOpen, setContactsSliderOpen] = useState(false);
+  const [asideShow, setAsideShow] = useState<
+    "contacts" | "conversations" | "settings"
+  >("conversations");
   const contactNavItems = useMemo(
     () =>
       [
@@ -54,9 +58,7 @@ export function ContactsAside({
         },
         {
           label: "Settings",
-          clickHandler: () => {
-            return;
-          },
+          clickHandler: () => setAsideShow("settings"),
         },
         {
           label: "Log out",
@@ -71,28 +73,41 @@ export function ContactsAside({
         " fixed h-full w-full bg-grey-600  md:static md:w-[40%] md:translate-x-0 lg:w-[30%]",
       )}
     >
-      <div className="h-full] relative">
-        <Header
-          dropdownItems={contactNavItems}
-          image={session.data?.user.image}
-        >
-          <Button
-            variant={"rounded"}
-            onClick={() => setContactsSliderOpen(true)}
-          >
-            <span className="text-grey-100">
-              <NewConversation />
-            </span>
-          </Button>
-        </Header>
-        {conversations.map((conversation) => (
-          <ConversationCard key={conversation.id} conversation={conversation} />
-        ))}
-        <ContactsSlider
-          contacts={contacts}
-          isOpen={contactsSliderOpen}
-          closeHandler={() => setContactsSliderOpen(false)}
-        />
+      <div className="relative h-full">
+        {asideShow === "conversations" && (
+          <>
+            <Header
+              dropdownItems={contactNavItems}
+              image={session.data?.user.image}
+            >
+              <Button
+                variant={"rounded"}
+                onClick={() => setAsideShow("contacts")}
+              >
+                <span className="text-grey-100">
+                  <NewConversation />
+                </span>
+              </Button>
+            </Header>
+            {conversations.map((conversation) => (
+              <ConversationCard
+                key={conversation.id}
+                conversation={conversation}
+              />
+            ))}
+          </>
+        )}
+        {asideShow === "contacts" && (
+          <ContactsSlider
+            contacts={contacts}
+            isOpen={contactsSliderOpen}
+            closeHandler={() => setAsideShow("conversations")}
+          />
+        )}
+
+        {asideShow === "settings" && (
+          <SettingsAside closeHandler={() => setAsideShow("conversations")} />
+        )}
       </div>
     </div>
   );

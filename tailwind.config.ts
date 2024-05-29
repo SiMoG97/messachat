@@ -121,6 +121,9 @@ const config = {
         "chat-bg": "url('/chat_bg.png')",
         // 'footer-texture': "url('/img/footer-texture.png')",
       },
+      boxShadow: {
+        input: "0 2px 0 #ffffff",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

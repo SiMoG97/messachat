@@ -6,3 +6,5 @@ export * from "./EmojiSvg";
 export * from "./NewConversation";
 export * from "./Arrow";
 export * from "./TrashIcon";
+export * from "./EditPenIcon";
+export * from "./CheckmarkIcon";

@@ -46,15 +46,7 @@ export function ContactsSlider({
     [router],
   );
   return (
-    <div
-      className={cn(
-        "absolute inset-0 h-full w-full  bg-grey-600 duration-150",
-        {
-          "-left-full": !isOpen,
-          "left-0": isOpen,
-        },
-      )}
-    >
+    <div className={cn(" h-full w-full bg-grey-600 ")}>
       <div className="flex bg-grey-300">
         <div className="mt-[50px] flex items-center gap-3 px-2 py-3 text-5md font-medium text-white-100">
           <Button variant={"rounded"} onClick={closeHandler}>
