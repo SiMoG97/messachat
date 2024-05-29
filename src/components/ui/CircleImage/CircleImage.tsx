@@ -9,6 +9,7 @@ const circleImageVariants = cva(
   {
     variants: {
       size: {
+        xsm: "size-[26px]",
         sm: "size-[40px]",
         md: "size-[49px]",
         lg: "size-[55px]",

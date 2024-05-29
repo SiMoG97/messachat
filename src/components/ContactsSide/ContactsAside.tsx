@@ -7,11 +7,12 @@ import { ContactsSlider } from "./ContactsSlider";
 import { type User } from "@prisma/client";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "../ui/button";
-import { NewConversation } from "../SVGs";
+import { GroupIcon, NewConversation } from "../SVGs";
 import { type ConversationType } from "@/types";
 import ConversationCard from "./ConversationCard";
 import { type MenuItemT } from "../ui/Dropdown";
 import SettingsAside from "./SettingsAside";
+import { NewGroupAside } from "./NewGroupAsiide";
 
 type ContactsAsidePropsT = {
   contacts: User[];
@@ -27,16 +28,14 @@ export function ContactsAside({
 
   const [contactsSliderOpen, setContactsSliderOpen] = useState(false);
   const [asideShow, setAsideShow] = useState<
-    "contacts" | "conversations" | "settings"
+    "contacts" | "conversations" | "settings" | "newGroup"
   >("conversations");
   const contactNavItems = useMemo(
     () =>
       [
         {
           label: "New group",
-          clickHandler: () => {
-            return;
-          },
+          clickHandler: () => setAsideShow("newGroup"),
         },
         {
           label: "New community",
@@ -79,15 +78,26 @@ export function ContactsAside({
             <Header
               dropdownItems={contactNavItems}
               image={session.data?.user.image}
+              profileClick={() => setAsideShow("settings")}
             >
-              <Button
-                variant={"rounded"}
-                onClick={() => setAsideShow("contacts")}
-              >
-                <span className="text-grey-100">
-                  <NewConversation />
-                </span>
-              </Button>
+              <>
+                <Button
+                  variant={"rounded"}
+                  onClick={() => setAsideShow("newGroup")}
+                >
+                  <span className="text-grey-100">
+                    <GroupIcon />
+                  </span>
+                </Button>
+                <Button
+                  variant={"rounded"}
+                  onClick={() => setAsideShow("contacts")}
+                >
+                  <span className="text-grey-100">
+                    <NewConversation />
+                  </span>
+                </Button>
+              </>
             </Header>
             {conversations.map((conversation) => (
               <ConversationCard
@@ -107,6 +117,13 @@ export function ContactsAside({
 
         {asideShow === "settings" && (
           <SettingsAside closeHandler={() => setAsideShow("conversations")} />
+        )}
+
+        {asideShow === "newGroup" && (
+          <NewGroupAside
+            closeHandler={() => setAsideShow("conversations")}
+            contacts={contacts}
+          />
         )}
       </div>
     </div>

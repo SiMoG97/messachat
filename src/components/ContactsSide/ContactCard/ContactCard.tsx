@@ -6,21 +6,21 @@ import React from "react";
 export type ContactCardPropT = {
   id: string;
   name: string;
-  date: string;
-  lastMessage: string;
+  date?: string;
+  lastMessage?: string;
   image?: string | null;
   selected?: boolean;
-  notificationNumber: number;
+  notificationNumber?: number;
   handleClick: () => void;
 };
 
 export function ContactCard({
   id,
   name,
-  date,
+  date = "",
   image,
   selected = false,
-  lastMessage,
+  lastMessage = "",
   notificationNumber = 0,
   handleClick,
 }: ContactCardPropT) {

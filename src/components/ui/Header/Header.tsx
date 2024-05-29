@@ -4,7 +4,6 @@ import { CircleImage } from "@/components/ui/CircleImage";
 import profilePic from "@/../public/pp.jpg";
 import { Dropdown, type MenuItemT } from "@/components/ui/Dropdown";
 import { cn } from "@/lib/utils";
-import { type SelectDropdownType } from "@/Hooks";
 // import { type User } from "@prisma/client";
 
 type HeaderPropsT = {
