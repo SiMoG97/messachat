@@ -2,13 +2,12 @@
 
 import React, { useCallback } from "react";
 import { ContactCard } from "./ContactCard";
-import { type User } from "next-auth";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Arrow } from "../SVGs";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { type Conversation } from "@prisma/client";
+import { type User, type Conversation } from "@prisma/client";
 
 type ContactsSlider = {
   contacts: User[];

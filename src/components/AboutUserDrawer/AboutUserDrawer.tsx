@@ -37,11 +37,11 @@ export function AboutUserDrawer({
       </div>
       <div className="flex flex-col gap-3 bg-grey-700 p-6 px-8">
         <div className="text-md text-grey-100">About</div>
-        <div className="text-3md text-white-100">Think more, do less</div>
+        <div className="text-3md text-white-100">{user.bio ?? "No bio"}</div>
       </div>
       <div>
         <button
-          className="text-danger mt-2 flex w-full cursor-pointer gap-3 bg-grey-700 p-6 px-8 text-3md hover:bg-grey-300 active:bg-grey-200"
+          className="mt-2 flex w-full cursor-pointer gap-3 bg-grey-700 p-6 px-8 text-3md text-danger hover:bg-grey-300 active:bg-grey-200"
           onClick={deleteChatHandler}
         >
           <TrashIcon />

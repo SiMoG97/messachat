@@ -14,6 +14,8 @@ import {
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { useToast } from "../ui/use-toast";
+import { type SettingsFormType, SettingsFromSchema } from "@/types";
+import { useRouter } from "next/navigation";
 
 type SettignsAsidePropsT = {
   closeHandler: () => void;
@@ -21,7 +23,6 @@ type SettignsAsidePropsT = {
 
 export default function SettingsAside({ closeHandler }: SettignsAsidePropsT) {
   const session = useSession();
-  console.log("settings Aside", session.data?.user.bio);
   return (
     <div className="h-full w-full bg-grey-500">
       <div className="flex bg-grey-300">
@@ -40,7 +41,7 @@ export default function SettingsAside({ closeHandler }: SettignsAsidePropsT) {
         title="Your name"
         name="name"
         description="This name will be visible to your Messachat contacts."
-        initValue="Simo Echaarani"
+        initValue={session.data?.user.name ?? ""}
         max={25}
       />
 
@@ -54,14 +55,6 @@ export default function SettingsAside({ closeHandler }: SettignsAsidePropsT) {
     </div>
   );
 }
-
-const SettingsFromSchema = z.object({
-  name: z.string().min(1).max(25).optional(),
-  bio: z.string().min(1).max(80).optional(),
-  image: z.string().optional(),
-});
-
-type SettingsFormType = z.infer<typeof SettingsFromSchema>;
 
 function SettingsForm({
   title,
@@ -80,6 +73,7 @@ function SettingsForm({
 }) {
   const [openForm, setOpenForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const { toast } = useToast();
   const { handleSubmit, register, watch, reset } = useForm<SettingsFormType>({
     resolver: zodResolver(SettingsFromSchema),
@@ -94,6 +88,7 @@ function SettingsForm({
       .post<SettingsFormType>("/api/settings", data)
       .then((res) => {
         console.log(res);
+        router.refresh();
       })
       .catch((error) => {
         console.error(error);
@@ -127,7 +122,7 @@ function SettingsForm({
         {openForm && (
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="disabled group flex items-center gap-2  shadow-grey-100/90 shadow-input focus-within:shadow-primary"
+            className="disabled group flex items-center gap-2  shadow-input shadow-grey-100/90 focus-within:shadow-primary"
           >
             <input
               {...register(name)}
@@ -170,6 +165,7 @@ function SettingsForm({
 }
 
 function SettingsImageForm({ initValue = "" }: { initValue?: string }) {
+  const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -202,6 +198,7 @@ function SettingsImageForm({ initValue = "" }: { initValue?: string }) {
       .post<SettingsFormType>("/api/settings", data)
       .then((res) => {
         console.log(res);
+        router.refresh();
       })
       .catch((error) => {
         console.error(error);
