@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { WelcomeComp } from "./WelcomeComp";
 import { useConversation } from "@/Hooks";
 import { useRouter } from "next/navigation";
@@ -17,6 +17,8 @@ import { type MenuItemT } from "../ui/Dropdown";
 import { AboutUserDrawer } from "../AboutUserDrawer";
 import { Dialog } from "../Dialog";
 import { FaLess } from "react-icons/fa";
+import axios from "axios";
+import { useToast } from "../ui/use-toast";
 
 type ChatSidePropsT = {
   conversation: Conversation & { users: User[] };
@@ -29,6 +31,8 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
   const otherUser = useSelectOtherUser(conversation);
   const [contactInfoIsOpen, setContactInfoIsOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const { toast } = useToast();
 
   const closeContactInfoHandler = () => {
     if (dialogOpen) return;
@@ -104,6 +108,27 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
     }
   }, [conversation.isGroup, conversation.users.length]);
 
+  const deleteCoversationHandler = useCallback(() => {
+    console.log("clicked");
+    setIsDeleteLoading(true);
+    axios
+      .delete(`/api/conversations/${conversation.id}`)
+      .then((res) => {
+        console.log(res);
+        router.push("/");
+        router.refresh();
+      })
+      .catch((err) => {
+        toast({
+          title: "Something went wrong!",
+          variant: "destructive",
+        });
+        console.log(err);
+      })
+      .finally(() => {
+        setDialogOpen(false);
+      });
+  }, [conversation.id, router, toast]);
   return (
     <>
       <Dialog
@@ -113,9 +138,9 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
         description="some weird text just to test the values"
         confirmText="Delete"
         closeHandler={() => setDialogOpen(false)}
-        confirmHandler={() => {
-          console.log("first");
-        }}
+        confirmHandler={deleteCoversationHandler}
+        loading={isDeleteLoading}
+        loadingText="Deleting..."
       />
       <div
         className={cn(

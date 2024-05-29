@@ -53,10 +53,14 @@ export async function POST(req: Request) {
     // find a unique conversation between two people not a group Conversation
     const privateConversation = await db.conversation.findFirst({
       where: {
-        OR: [
-          { userIds: { equals: [currentUser.id, userId] } },
-          { userIds: { equals: [userId, currentUser.id] } },
+        AND: [
+          { users: { some: { id: currentUser.id } } },
+          { users: { some: { id: userId } } },
         ],
+        // OR: [
+        //   { userIds: { equals: [currentUser.id, userId] } },
+        //   { userIds: { equals: [userId, currentUser.id] } },
+        // ],
       },
     });
 
@@ -67,7 +71,7 @@ export async function POST(req: Request) {
     // if no private conversation between two people found, create a new one
     const newPrivateConversation = await db.conversation.create({
       data: {
-        userIds: [currentUser.id, userId],
+        // userIds: [currentUser.id, userId],
         users: { connect: [{ id: currentUser.id }, { id: userId }] },
       },
       include: { users: true },
@@ -76,6 +80,9 @@ export async function POST(req: Request) {
     return NextResponse.json(newPrivateConversation);
   } catch (error) {
     console.log("conversation");
-    return new NextResponse("Internal Error CONVERSATION", { status: 500 });
+    return new NextResponse(
+      "Internal Error CONVERSATION\n==================\n=========\n\n\n\\n\nnn\n\n\n",
+      { status: 500 },
+    );
   }
 }

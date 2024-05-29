@@ -15,7 +15,7 @@ import { useState } from "react";
 
 export type MenuItemT = {
   label: string;
-  clickHandler: () => Promise<void | undefined> | void;
+  clickHandler: () => void | Promise<void | undefined>;
   // clickHandler:
 };
 

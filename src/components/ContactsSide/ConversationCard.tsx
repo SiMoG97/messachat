@@ -53,11 +53,6 @@ export default function ConversationCard({
     return "Start chatting!";
   }, [lastMessage?.body, lastMessage?.image]);
 
-  console.log(
-    conversation.messages.filter(
-      (msg) => !msg.seen.some((user) => user.id === session.data?.user.id),
-    ).length,
-  );
   return (
     <>
       <ContactCard

@@ -44,7 +44,6 @@ export function ConversationDisplayer({
     const filterredSeen = message.seen
       .filter((user) => user.email !== session.data?.user.email)
       .some((user) => user.email === otherUser?.email);
-    console.log(filterredSeen);
 
     if (filterredSeen) return "seen";
     return "delivered";
