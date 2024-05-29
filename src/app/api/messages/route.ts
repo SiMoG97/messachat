@@ -55,7 +55,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(newMessage);
   } catch (error) {
-    console.log("ERROR messages api route: ", error);
+    console.log(error, "ERROR_MESSAGES");
     return new NextResponse("InternalError Mesaages", { status: 500 });
   }
 }

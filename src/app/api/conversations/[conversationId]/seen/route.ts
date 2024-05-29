@@ -57,7 +57,7 @@ export async function POST(
     return NextResponse.json(updatedMessages);
     // console.log(unseenMessages);
   } catch (error) {
-    console.log("EROOR_MESSAGES_SEEN", error, "ERROR_MESSAGES_SEEN");
-    return new NextResponse("Internal Error eRROR MESSAGEES", { status: 500 });
+    console.log(error, "ERROR_CONVERSATIONID_MESSAGES_SEEN");
+    return new NextResponse("Internal Error", { status: 500 });
   }
 }

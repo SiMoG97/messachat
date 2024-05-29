@@ -79,10 +79,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(newPrivateConversation);
   } catch (error) {
-    console.log("conversation");
-    return new NextResponse(
-      "Internal Error CONVERSATION\n==================\n=========\n\n\n\\n\nnn\n\n\n",
-      { status: 500 },
-    );
+    console.log(error, "ERROR_CONVERSATION");
+    return new NextResponse("Internal Error", { status: 500 });
   }
 }

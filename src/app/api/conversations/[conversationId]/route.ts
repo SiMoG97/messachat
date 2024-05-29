@@ -31,5 +31,7 @@ export async function DELETE(
     });
 
     return NextResponse.json(deletedConversation);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error, "ERROR_CONVERSATION_ID");
+  }
 }
