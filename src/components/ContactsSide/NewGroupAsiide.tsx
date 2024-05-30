@@ -24,7 +24,7 @@ type NewGroupAsidePropsT = {
 };
 
 const GroupSchema = z.object({
-  name: z.string().min(1).max(25),
+  name: z.string().min(1).max(35),
   members: z
     .array(
       z.object({
@@ -140,8 +140,9 @@ export function NewGroupAside({
         <div className="flex  justify-center  py-6">
           {formState.isValid && (
             <button
-              className="flex size-12 items-center justify-center rounded-full bg-primary text-white-100"
+              className="flex size-12 items-center justify-center rounded-full bg-primary text-white-100 disabled:cursor-not-allowed disabled:bg-grey-100"
               type="submit"
+              disabled={isLoading}
             >
               <CheckmarkIcon />
             </button>

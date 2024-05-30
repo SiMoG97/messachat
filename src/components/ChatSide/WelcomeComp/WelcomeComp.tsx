@@ -3,6 +3,7 @@ import { useConversation } from "@/Hooks";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
+import BeatLoader from "react-spinners/BeatLoader";
 
 export function WelcomeComp() {
   const { isOpen } = useConversation();
@@ -27,6 +28,7 @@ export function WelcomeComp() {
           <div>
             <h1 className="text-2lg font-light text-white-100">
               Start a conversation with a friend!
+              {/* <BeatLoader color="#36d7b7" /> */}
             </h1>
           </div>
           <div>

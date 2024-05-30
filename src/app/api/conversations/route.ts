@@ -56,11 +56,8 @@ export async function POST(req: Request) {
         AND: [
           { users: { some: { id: currentUser.id } } },
           { users: { some: { id: userId } } },
+          { isGroup: false || null },
         ],
-        // OR: [
-        //   { userIds: { equals: [currentUser.id, userId] } },
-        //   { userIds: { equals: [userId, currentUser.id] } },
-        // ],
       },
     });
 
@@ -71,7 +68,6 @@ export async function POST(req: Request) {
     // if no private conversation between two people found, create a new one
     const newPrivateConversation = await db.conversation.create({
       data: {
-        // userIds: [currentUser.id, userId],
         users: { connect: [{ id: currentUser.id }, { id: userId }] },
       },
       include: { users: true },

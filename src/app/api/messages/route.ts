@@ -1,4 +1,5 @@
 import getCurrentUser from "@/actions/getCurrentUser";
+import { pusherServer } from "@/lib/pusher";
 import { db } from "@/server/db";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -49,9 +50,20 @@ export async function POST(req: Request) {
       },
     });
 
-    //
-    // pusher implementation
-    //
+    // Pusher
+    await pusherServer.trigger(conversationId, "messages:new", newMessage);
+
+    const lastMessage =
+      updatedConversation.messages[updatedConversation.messages.length - 1];
+
+    updatedConversation.users.map((user) => {
+      pusherServer
+        .trigger(user.email!, "conversation:update", {
+          id: conversationId,
+          messages: [lastMessage],
+        })
+        .catch(() => new Error("Something went wrong with pusher server"));
+    });
 
     return NextResponse.json(newMessage);
   } catch (error) {

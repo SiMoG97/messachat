@@ -5,7 +5,6 @@ export default async function getCurrentUserConversations() {
   const currentUser = await getCurrentUser();
   if (!currentUser?.id) return [];
 
-  console.log("\n\n\n\n\n from getCurrentUserConversations \n\n\n\n\n\n");
   try {
     const conversations = await db.conversation.findMany({
       orderBy: { lastMessageAt: "desc" },
@@ -19,7 +18,6 @@ export default async function getCurrentUserConversations() {
 
     return conversations;
   } catch (error) {
-    console.log("\n\n\n\n\n from getCurrentUserConversations \n\n\n\n\n\n");
     return [];
   }
 }

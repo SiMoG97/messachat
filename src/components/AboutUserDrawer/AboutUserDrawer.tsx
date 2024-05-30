@@ -64,7 +64,7 @@ export function AboutUserDrawer({
             {conversation.users.map((u) => (
               <div key={u.id} className="flex items-center gap-2 ">
                 <CircleImage size={"xsm"} src={u.image} />
-                <div className="text-[13.5px] text-white-100">{u.name}</div>
+                <div className="text-[13.5px] text-white-100">{u.email}</div>
               </div>
             ))}
           </div>

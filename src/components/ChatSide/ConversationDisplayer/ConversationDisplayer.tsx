@@ -8,6 +8,8 @@ import { useSession } from "next-auth/react";
 import { type User, type Conversation } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { pusherClient } from "@/lib/pusher";
+import { find } from "lodash";
 
 type ConversationDisplayerPropsT = {
   initMessages: MessageType[];
@@ -35,10 +37,41 @@ export function ConversationDisplayer({
   const otherUser = useSelectOtherUser(conversation);
 
   useEffect(() => {
+    if (typeof conversationId !== "string") return;
+
     axios
-      .post(`/api/conversations/${conversationId as string}/seen`)
+      .post(`/api/conversations/${conversationId}/seen`)
       .then((res) => console.log(res))
       .catch((err) => console.error(err));
+  }, [conversationId]);
+
+  useEffect(() => {
+    if (typeof conversationId !== "string") return;
+    pusherClient.subscribe(conversationId);
+
+    scrollBottomRef.current?.scrollIntoView();
+
+    const messageHandler = (message: MessageType) => {
+      setMesages((prev) => {
+        if (find(prev, { id: message.id })) return prev;
+
+        return [...prev, message];
+      });
+
+      scrollBottomRef.current?.scrollIntoView();
+
+      axios
+        .post(`/api/conversations/${conversationId}/seen`)
+        .then((res) => console.log(res))
+        .catch((err) => console.error(err));
+    };
+
+    pusherClient.bind("messages:new", messageHandler);
+
+    return () => {
+      pusherClient.unsubscribe(conversationId);
+      pusherClient.unbind("messages:new", messageHandler);
+    };
   }, [conversationId]);
 
   const hadnleSeenStatus = (message: MessageType) => {

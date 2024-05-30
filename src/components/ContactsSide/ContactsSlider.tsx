@@ -8,6 +8,7 @@ import { Arrow } from "../SVGs";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { type User, type Conversation } from "@prisma/client";
+import { useToast } from "../ui/use-toast";
 
 type ContactsSlider = {
   contacts: User[];
@@ -21,6 +22,7 @@ export function ContactsSlider({
   isOpen,
 }: ContactsSlider) {
   const router = useRouter();
+  const { toast } = useToast();
   const hadnleClick = useCallback(
     (id: string) => {
       // setIsLoading(true);
@@ -29,15 +31,19 @@ export function ContactsSlider({
         .post<Conversation>("/api/conversations", {
           userId: id,
           isGroup: false,
-          members: [],
-          name: "someweird name",
         })
         .then(({ data }) => {
           console.log(data);
           // router.push(`?conversationId=${data.id}`);
           router.push(`/${data.id}`);
         })
-        .catch((e) => console.log(e))
+        .catch((e) => {
+          toast({
+            variant: "destructive",
+            title: "Something went wrong",
+          });
+          console.log(e);
+        })
         .finally(() => {
           // setIsLoading(false);
         });
