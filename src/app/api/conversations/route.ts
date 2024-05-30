@@ -5,12 +5,12 @@ import { db } from "@/server/db";
 import { z } from "zod";
 
 const requestBodySchema = z.object({
-  userId: z.string(),
+  userId: z.string().optional(),
   isGroup: z.boolean(),
   members: z
     .array(
       z.object({
-        value: z.string(),
+        id: z.string(),
       }),
     )
     .optional(),
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (isGroup && (!members || members.length < 2 || !name)) {
+    if (isGroup && (!members || members.length < 1 || !name)) {
       return new NextResponse("Invalid Data", { status: 400 });
     }
 
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
           isGroup,
           users: {
             connect: [
-              ...(members ?? []).map((member) => ({ id: member.value })),
+              ...(members ?? []).map((member) => ({ id: member.id })),
               { id: currentUser.id },
             ],
           },

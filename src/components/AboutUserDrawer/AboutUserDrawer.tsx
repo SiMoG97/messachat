@@ -3,12 +3,13 @@ import React from "react";
 import { Header } from "../ui/Header";
 import { Arrow, TrashIcon } from "../SVGs";
 import { CircleImage } from "../ui/CircleImage";
-import { type User } from "@prisma/client";
+import { type Conversation, type User } from "@prisma/client";
 
 type AboutUserDrawerPropsT = {
   closeHandler: () => void;
   deleteChatHandler: () => void;
   user: User;
+  conversation: Conversation & { users: User[] };
   // isDialogOpen?:boolean;
 };
 
@@ -16,6 +17,7 @@ export function AboutUserDrawer({
   closeHandler,
   deleteChatHandler,
   user,
+  conversation,
 }: AboutUserDrawerPropsT) {
   useCloseWithEscape(closeHandler);
   return (
@@ -26,18 +28,47 @@ export function AboutUserDrawer({
             <Arrow />
           </span>
         </button>
-        <Header name={"Contact info"} className=" flex-1" />
+        <Header
+          name={conversation.isGroup ? "Group info" : "Contact info"}
+          className=" flex-1"
+          isGroup={conversation.isGroup}
+        />
       </div>
       <div className="flex justify-center bg-primary-200 p-8 text-white-100">
         <div className="text-center">
-          <CircleImage src={user.image} size={"xl"} className="my-2" />
-          <div className="text-lg">{user.name}</div>
-          <div className="text-2md text-white-70">{user.email}</div>
+          <CircleImage
+            src={!conversation.isGroup ? user.image : null}
+            size={"xl"}
+            className="my-2"
+            isGroup={conversation.isGroup}
+          />
+          <div className="text-lg">
+            {conversation.isGroup ? conversation.name : user.name}
+          </div>
+          <div className="text-2md text-white-70">
+            {conversation.isGroup
+              ? `${conversation.users.length} members`
+              : user.email}
+          </div>
         </div>
       </div>
       <div className="flex flex-col gap-3 bg-grey-700 p-6 px-8">
-        <div className="text-md text-grey-100">About</div>
-        <div className="text-3md text-white-100">{user.bio ?? "No bio"}</div>
+        <div className="text-md text-grey-100">
+          {conversation.isGroup ? "Group members" : "About"}
+        </div>
+        {!conversation.isGroup && (
+          <div className="text-3md text-white-100">{user.bio ?? "No bio"}</div>
+        )}
+        {conversation.isGroup && (
+          <div className="flex gap-4 text-3md text-white-100">
+            {conversation.users.map((u) => (
+              <div key={u.id} className="flex items-center gap-2 ">
+                <CircleImage size={"xsm"} src={u.image} />
+                <div className="text-[13.5px] text-white-100">{u.name}</div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <div>
         <button
@@ -45,7 +76,7 @@ export function AboutUserDrawer({
           onClick={deleteChatHandler}
         >
           <TrashIcon />
-          <span>Delete chat</span>
+          <span>Delete {conversation.isGroup ? "group" : "chat"}</span>
         </button>
       </div>
     </div>

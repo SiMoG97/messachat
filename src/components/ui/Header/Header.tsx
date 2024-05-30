@@ -12,6 +12,7 @@ type HeaderPropsT = {
   status?: string;
   dropdownItems?: MenuItemT[];
   profileClick?: () => void | null;
+  isGroup?: boolean | null;
 } & ComponentProps<"header">;
 export function Header({
   name,
@@ -20,6 +21,7 @@ export function Header({
   image,
   dropdownItems,
   status,
+  isGroup = false,
   profileClick = () => null,
   ...props
 }: HeaderPropsT) {
@@ -35,7 +37,13 @@ export function Header({
         className="flex cursor-pointer items-center gap-3"
         onClick={profileClick}
       >
-        {image && <CircleImage size={"sm"} src={image} />}
+        {image && (
+          <CircleImage
+            isGroup={isGroup}
+            size={"sm"}
+            src={!isGroup ? image : undefined}
+          />
+        )}
         <div>
           <>
             {name && <div className="text-2md font-semibold">{name}</div>}

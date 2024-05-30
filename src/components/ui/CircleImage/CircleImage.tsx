@@ -1,6 +1,8 @@
 import Image from "next/image";
 import React, { type ComponentProps } from "react";
 import pp_placeholder from "@/../public/pp_placeholder.webp";
+// import groupImg from "@/../public/groupusersPlaceholder.png";
+import groupImg from "@/../public/groupPlaceholder.jpg";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +27,7 @@ const circleImageVariants = cva(
 type CircleImagePropsT = {
   src?: string | null;
   alt?: string;
+  isGroup?: boolean | null;
 } & ComponentProps<"div"> &
   VariantProps<typeof circleImageVariants>;
 export function CircleImage({
@@ -32,13 +35,14 @@ export function CircleImage({
   alt = "",
   size,
   className,
+  isGroup = false,
   children,
   ...props
 }: CircleImagePropsT) {
   return (
     <div className={cn(circleImageVariants({ size, className }))} {...props}>
       <Image
-        src={src ?? pp_placeholder}
+        src={isGroup ? groupImg : src ?? pp_placeholder}
         alt={alt}
         className="object-cover"
         objectFit="cover"

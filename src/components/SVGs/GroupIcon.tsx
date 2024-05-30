@@ -22,19 +22,3 @@ export function GroupIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-
-{
-  /* <svg
-  viewBox="0 0 16 16"
-  height="16"
-  width="16"
-  preserveAspectRatio="xMidYMid meet"
-  class=""
-  version="1.1"
-  x="0px"
-  y="0px"
-  enable-background="new 0 0 16 16"
->
-  <title>x-alt-small</title>
-</svg>; */
-}

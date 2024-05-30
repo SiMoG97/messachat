@@ -3,10 +3,12 @@ import { type SVGProps } from "react";
 
 export function CheckmarkIcon({
   className,
+  width = 24,
+  height = 24,
   ...props
 }: SVGProps<SVGSVGElement>) {
   return (
-    <svg width={24} height={24} {...props} className={cn(className)}>
+    <svg width={width} height={height} {...props} className={cn(className)}>
       <title>checkmark</title>
       <path
         fill="currentColor"

@@ -19,6 +19,7 @@ import { Dialog } from "../Dialog";
 import { FaLess } from "react-icons/fa";
 import axios from "axios";
 import { useToast } from "../ui/use-toast";
+import { isGeneratorFunction } from "util/types";
 
 type ChatSidePropsT = {
   conversation: Conversation & { users: User[] };
@@ -44,7 +45,7 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
   const dropDownItems: MenuItemT[] = useMemo(
     () => [
       {
-        label: "Contact info",
+        label: !conversation.isGroup ? "Contact info" : "Group info",
         clickHandler: () => {
           setContactInfoIsOpen(true);
         },
@@ -98,7 +99,7 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
         },
       },
     ],
-    [router],
+    [router, conversation.isGroup],
   );
 
   const status = useMemo(() => {
@@ -132,10 +133,10 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
   return (
     <>
       <Dialog
-        title="Are you sure you want to delete this chat?"
+        title={`Are you sure you want to delete this ${conversation.isGroup ? "group" : "chat"}?`}
         variant="danger"
         isOpen={dialogOpen}
-        description="some weird text just to test the values"
+        description="By clicking 'Delete' you confirm to delete this conversation"
         confirmText="Delete"
         closeHandler={() => setDialogOpen(false)}
         confirmHandler={deleteCoversationHandler}
@@ -159,12 +160,15 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
                 </span>
               </Link>
               <Header
-                name={otherUser?.name ?? conversation.name}
+                name={
+                  conversation.isGroup ? conversation.name : otherUser?.name
+                }
                 image={otherUser?.image}
                 className="flex-1"
                 status={status}
                 dropdownItems={dropDownItems}
                 profileClick={() => setContactInfoIsOpen(true)}
+                isGroup={conversation.isGroup}
               ></Header>
             </div>
             <div className=" relative flex flex-1  flex-col overflow-y-auto">
@@ -183,7 +187,7 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
             closeHandler={closeContactInfoHandler}
             deleteChatHandler={() => setDialogOpen(true)}
             user={otherUser}
-            // isDialogOpen={dialogOpen}
+            conversation={conversation}
           />
         )}
       </div>

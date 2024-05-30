@@ -22,9 +22,10 @@ export function ConversationDisplayer({
 }: ConversationDisplayerPropsT) {
   // useCloseChatWithEscapeBtnKeyboard();
   const router = useRouter();
-  useCloseWithEscape((e: KeyboardEvent) => {
+  useCloseWithEscape(() => {
     if (isDialogOpen) return;
-    if (e.key === "Escape") router.push("/");
+    // if (e.key === "Escape") router.push("/");
+    router.push("/");
   });
 
   const [messages, setMesages] = useState(initMessages);

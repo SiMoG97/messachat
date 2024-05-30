@@ -12,6 +12,7 @@ export type ContactCardPropT = {
   selected?: boolean;
   notificationNumber?: number;
   handleClick: () => void;
+  isGroup?: boolean | null;
 };
 
 export function ContactCard({
@@ -23,6 +24,7 @@ export function ContactCard({
   lastMessage = "",
   notificationNumber = 0,
   handleClick,
+  isGroup = false,
 }: ContactCardPropT) {
   return (
     <div
@@ -35,7 +37,11 @@ export function ContactCard({
       )}
       onClick={handleClick}
     >
-      <CircleImage src={image} alt={`${name}'s profile picture`} />
+      <CircleImage
+        isGroup={isGroup}
+        src={image}
+        alt={`${name}'s profile picture`}
+      />
       {/* max-w calcs 100% width - the gap size - the profile pic size */}
       <div className="flex h-full max-w-[calc(100%-2.75rem-1rem)] flex-1 flex-col justify-center border-b-[1px] border-myBorder">
         <div className="flex justify-between">

@@ -58,7 +58,8 @@ export default function ConversationCard({
       <ContactCard
         id={conversation.id}
         lastMessage={lastMessageText}
-        image={otherUser?.image}
+        // image={otherUser?.image}
+        image={!conversation.isGroup ? otherUser?.image : null}
         notificationNumber={numberOfNotifications}
         date={
           lastMessage?.createdAt
@@ -68,6 +69,7 @@ export default function ConversationCard({
         handleClick={handleClick}
         name={conversation.name ?? otherUser?.name ?? ""}
         selected={conversationId === conversation.id}
+        isGroup={conversation.isGroup}
       />
     </>
   );
