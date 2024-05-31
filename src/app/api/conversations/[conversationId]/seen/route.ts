@@ -41,10 +41,12 @@ export async function POST(
     const updatedMessages = await Promise.all(
       unseenMessages.map((message) => {
         return db.message.update({
-          where: { id: message.id },
+          where: {
+            id: message.id,
+            NOT: { seenIds: { has: currentUser.id } },
+          },
           include: { sender: true, seen: true },
           data: {
-            // seenIds: [...message.seenIds, currentUser.id],
             seen: { connect: { id: currentUser.id } },
             seenIds: { push: currentUser.id },
           },
@@ -60,6 +62,16 @@ export async function POST(
     // updatedMessages.forEach(msg=>{
     //   if(msg.seen.includes(currentUser))
     // })
+
+    const something = await pusherServer.trigger(
+      conversationId,
+      "message:update",
+      updatedMessages,
+    );
+
+    console.log("\n\n\n\n\n\n\n\n\n\n\n");
+    console.log(something);
+    console.log("\n\n\n\n\n\n\n\n\n\n\n");
 
     return NextResponse.json(updatedMessages);
     // console.log(unseenMessages);

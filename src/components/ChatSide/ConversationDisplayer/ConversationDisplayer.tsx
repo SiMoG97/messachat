@@ -26,7 +26,6 @@ export function ConversationDisplayer({
   const router = useRouter();
   useCloseWithEscape(() => {
     if (isDialogOpen) return;
-    // if (e.key === "Escape") router.push("/");
     router.push("/");
   });
 
@@ -37,14 +36,12 @@ export function ConversationDisplayer({
   const otherUser = useSelectOtherUser(conversation);
 
   useEffect(() => {
-    console.log("hmmm its working somehow");
     if (typeof conversationId !== "string") return;
 
     axios
       .post(`/api/conversations/${conversationId}/seen`)
-      .then((res) => {
+      .then(() => {
         router.refresh();
-        console.log(res);
       })
       .catch((err) => console.error(err));
   }, [conversationId, router, messages]);
@@ -66,20 +63,32 @@ export function ConversationDisplayer({
 
       axios
         .post(`/api/conversations/${conversationId}/seen`)
-        .then((res) => {
+        .then(() => {
           router.refresh();
-          console.log(res);
         })
         .catch((err) => console.error(err));
     };
 
-    pusherClient.bind("messages:new", messageHandler);
+    const updateMessagesHandler = (newMessages: MessageType[]) => {
+      setMesages((prev) =>
+        prev.map((msg) => {
+          const seenMessage = newMessages.find(
+            (message) => message.id === msg.id,
+          );
+          if (seenMessage) return seenMessage;
+          return msg;
+        }),
+      );
+    };
+    pusherClient.bind("message:new", messageHandler);
+    pusherClient.bind("message:update", updateMessagesHandler);
 
     return () => {
       pusherClient.unsubscribe(conversationId);
-      pusherClient.unbind("messages:new", messageHandler);
+      pusherClient.unbind("message:new", messageHandler);
+      pusherClient.unbind("message:update", updateMessagesHandler);
     };
-  }, [conversationId, router]);
+  }, [conversationId, router, messages]);
 
   const hadnleSeenStatus = (message: MessageType) => {
     const filterredSeen = message.seen

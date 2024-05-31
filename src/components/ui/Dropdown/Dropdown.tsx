@@ -15,12 +15,9 @@ import { useState } from "react";
 export type MenuItemT = {
   label: string;
   clickHandler: () => void | Promise<void | undefined>;
-  // clickHandler:
 };
 
 type DropdownPropsT = {
-  // menuItems: MenuItemT[];
-
   dropdownItems: MenuItemT[];
 };
 export function Dropdown({ dropdownItems }: DropdownPropsT) {

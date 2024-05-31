@@ -2,7 +2,6 @@ import getCurrentUser from "@/actions/getCurrentUser";
 import { db } from "@/server/db";
 import { SettingsFromSchema } from "@/types";
 import { NextResponse } from "next/server";
-import { z } from "zod";
 
 export async function POST(req: Request) {
   try {

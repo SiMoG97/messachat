@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ContactCard } from "./ContactCard";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -9,12 +9,10 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { type User, type Conversation } from "@prisma/client";
 import { CircleImage } from "../ui/CircleImage";
-import { IoIosClose } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "../ui/use-toast";
-import { useSession } from "next-auth/react";
 
 type NewGroupAsidePropsT = {
   // contacts: User[];
@@ -118,7 +116,6 @@ export function NewGroupAside({
           .map((user) => (
             <ContactCard
               key={user.id}
-              id={user.id}
               image={user.image}
               name={user.name ?? ""}
               handleClick={() => setMembers((prev) => [...prev, user])}

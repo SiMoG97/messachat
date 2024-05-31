@@ -1,12 +1,10 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { WelcomeComp } from "./WelcomeComp";
+import React, { useCallback, useMemo, useState } from "react";
 import { useConversation } from "@/Hooks";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { type User, type Conversation, type Message } from "@prisma/client";
-import { type ConversationType, type MessageType } from "@/types";
+import type { User, Conversation } from "@prisma/client";
+import type { MessageType } from "@/types";
 import { Header } from "../ui/Header";
 import { ConversationDisplayer } from "./ConversationDisplayer";
 import { ChatTextareaForm } from "./ChatTextareaForm";
@@ -16,10 +14,8 @@ import { Arrow } from "../SVGs";
 import { type MenuItemT } from "../ui/Dropdown";
 import { AboutUserDrawer } from "../AboutUserDrawer";
 import { Dialog } from "../Dialog";
-import { FaLess } from "react-icons/fa";
 import axios from "axios";
 import { useToast } from "../ui/use-toast";
-import { isGeneratorFunction } from "util/types";
 
 type ChatSidePropsT = {
   conversation: Conversation & { users: User[] };
@@ -39,9 +35,9 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
     if (dialogOpen) return;
     setContactInfoIsOpen(false);
   };
-  const deleteChatHandler = () => {
-    console.log("chat deleted");
-  };
+  // const deleteChatHandler = () => {
+  //   console.log("chat deleted");
+  // };
   const dropDownItems: MenuItemT[] = useMemo(
     () => [
       {

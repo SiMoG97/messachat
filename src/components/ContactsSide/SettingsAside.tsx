@@ -3,7 +3,6 @@ import { Button } from "../ui/button";
 import { Arrow, CheckIcon, EditPenIcon } from "../SVGs";
 import { CircleImage } from "../ui/CircleImage";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IoIosClose } from "react-icons/io";
 import { FaCamera } from "react-icons/fa";

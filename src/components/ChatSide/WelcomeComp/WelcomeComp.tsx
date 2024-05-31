@@ -3,7 +3,6 @@ import { useConversation } from "@/Hooks";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
-import BeatLoader from "react-spinners/BeatLoader";
 
 export function WelcomeComp() {
   const { isOpen } = useConversation();

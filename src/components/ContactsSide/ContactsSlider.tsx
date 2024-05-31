@@ -48,7 +48,7 @@ export function ContactsSlider({
           // setIsLoading(false);
         });
     },
-    [router],
+    [router, toast],
   );
   return (
     <div className={cn(" h-full w-full bg-grey-600 ")}>
@@ -65,7 +65,6 @@ export function ContactsSlider({
       {contacts?.map((user) => (
         <div onClick={closeHandler} key={user.id}>
           <ContactCard
-            id={user.id}
             date={""}
             lastMessage={""}
             image={user.image}

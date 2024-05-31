@@ -2,7 +2,6 @@ import {
   DblCheckIcon,
   TailOutLeftticon,
   TailOutRighticon,
-  TimeIcon,
 } from "@/components/SVGs";
 import { cn } from "@/lib/utils";
 import Image from "next/image";

@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import React from "react";
 
 export type ContactCardPropT = {
-  id: string;
   name: string;
   date?: string;
   lastMessage?: string;
@@ -16,7 +15,6 @@ export type ContactCardPropT = {
 };
 
 export function ContactCard({
-  id,
   name,
   date = "",
   image,
@@ -46,7 +44,7 @@ export function ContactCard({
       <div className="flex h-full max-w-[calc(100%-2.75rem-1rem)] flex-1 flex-col justify-center border-b-[1px] border-myBorder">
         <div className="flex justify-between">
           <div
-            className={cn("text-3md text-white-100", {
+            className={cn("truncate text-3md text-white-100", {
               "font-medium": notificationNumber > 0,
             })}
           >
@@ -54,7 +52,7 @@ export function ContactCard({
           </div>
           <div
             className={cn(
-              "text-2sm text-grey-100",
+              "shrink-0 text-2sm text-grey-100",
               notificationNumber > 0 && "text-primary",
             )}
           >

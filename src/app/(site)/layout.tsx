@@ -1,6 +1,5 @@
 import getCurrentUserConversations from "@/actions/getCurrentUserConversations";
 import getUsers from "@/actions/getUsers";
-import { ChatSide } from "@/components/ChatSide";
 import { ContactsAside } from "@/components/ContactsSide";
 import AuthContext from "@/context/AuthContext";
 import { loginIsRequiredServer } from "@/server/auth";

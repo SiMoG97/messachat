@@ -6,7 +6,6 @@ import { z } from "zod";
 import EmojiPicker, { Theme } from "emoji-picker-react";
 import {
   CldUploadButton,
-  type CloudinaryUploadWidgetInfo,
   type CloudinaryUploadWidgetResults,
 } from "next-cloudinary";
 import { Button } from "@/components/ui/button";
@@ -16,7 +15,6 @@ import { useRef, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { EmojiSvg, SendIcon } from "@/components/SVGs";
 import { useOnClickOutside } from "@/Hooks";
-import { BiImageAdd } from "react-icons/bi";
 import axios from "axios";
 import { AddPhotoIcon } from "@/components/SVGs/AddPhotoIcon";
 

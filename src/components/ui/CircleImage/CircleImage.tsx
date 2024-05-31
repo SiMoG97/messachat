@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React, { type ComponentProps } from "react";
 import pp_placeholder from "@/../public/pp_placeholder.webp";
-// import groupImg from "@/../public/groupusersPlaceholder.png";
 import groupImg from "@/../public/groupPlaceholder.jpg";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";

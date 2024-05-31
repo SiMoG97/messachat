@@ -35,7 +35,7 @@ export function AboutUserDrawer({
         />
       </div>
       <div className="flex justify-center bg-primary-200 p-8 text-white-100">
-        <div className="text-center">
+        <div className="flex flex-col items-center text-center">
           <CircleImage
             src={!conversation.isGroup ? user.image : null}
             size={"xl"}
@@ -60,7 +60,7 @@ export function AboutUserDrawer({
           <div className="text-3md text-white-100">{user.bio ?? "No bio"}</div>
         )}
         {conversation.isGroup && (
-          <div className="flex gap-4 text-3md text-white-100">
+          <div className="flex w-full flex-wrap gap-4 text-3md text-white-100">
             {conversation.users.map((u) => (
               <div key={u.id} className="flex items-center gap-2 ">
                 <CircleImage size={"xsm"} src={u.image} />

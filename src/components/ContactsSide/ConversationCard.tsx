@@ -11,12 +11,10 @@ import { useConversation } from "@/Hooks";
 
 type ConversationCardPropsT = {
   conversation: ConversationType;
-  selected?: boolean;
 };
 
 export default function ConversationCard({
   conversation,
-  selected,
 }: ConversationCardPropsT) {
   const { conversationId } = useConversation();
   const otherUser = useSelectOtherUser(conversation);
@@ -56,7 +54,6 @@ export default function ConversationCard({
   return (
     <>
       <ContactCard
-        id={conversation.id}
         lastMessage={lastMessageText}
         // image={otherUser?.image}
         image={!conversation.isGroup ? otherUser?.image : null}
