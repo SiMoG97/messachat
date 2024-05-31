@@ -13,6 +13,7 @@ import ConversationCard from "./ConversationCard";
 import { type MenuItemT } from "../ui/Dropdown";
 import SettingsAside from "./SettingsAside";
 import { NewGroupAside } from "./NewGroupAsiide";
+import ConversationList from "./ConversationList";
 
 type ContactsAsidePropsT = {
   contacts: User[];
@@ -99,12 +100,13 @@ export function ContactsAside({
                 </Button>
               </>
             </Header>
-            {conversations.map((conversation) => (
+            {/* {conversations.map((conversation) => (
               <ConversationCard
                 key={conversation.id}
                 conversation={conversation}
               />
-            ))}
+            ))} */}
+            <ConversationList initConversations={conversations} />
           </>
         )}
         {asideShow === "contacts" && (

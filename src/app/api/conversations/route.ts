@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import getCurrentUser from "@/actions/getCurrentUser";
 import { db } from "@/server/db";
 import { z } from "zod";
+import { pusherServer } from "@/lib/pusher";
 
 const requestBodySchema = z.object({
   userId: z.string().optional(),
@@ -48,6 +49,15 @@ export async function POST(req: Request) {
         include: { users: true },
       });
 
+      newConversation.users.forEach((user) => {
+        if (user.email) {
+          pusherServer
+            .trigger(user.email, "conversation:new", newConversation)
+            .then((res) => console.log(res))
+            .catch((e) => console.log(e));
+        }
+      });
+
       return NextResponse.json(newConversation);
     }
 
@@ -78,6 +88,14 @@ export async function POST(req: Request) {
       include: { users: true },
     });
 
+    newPrivateConversation.users.forEach((user) => {
+      if (user.email) {
+        pusherServer
+          .trigger(user.email, "conversation:new", newPrivateConversation)
+          .then((res) => console.log(res))
+          .catch((e) => console.log(e));
+      }
+    });
     return NextResponse.json(newPrivateConversation);
   } catch (error) {
     console.log(error, "ERROR_CONVERSATION");

@@ -16,19 +16,21 @@ type ConversationCardPropsT = {
 export default function ConversationCard({
   conversation,
 }: ConversationCardPropsT) {
-  const { conversationId } = useConversation();
+  const { conversationId, isOpen } = useConversation();
   const otherUser = useSelectOtherUser(conversation);
   const session = useSession();
   const router = useRouter();
 
   const handleClick = useCallback(() => {
-    // router.push(`?conversationId=${conversation.id}`);
     router.push(`/${conversation.id}`);
   }, [conversation.id, router]);
 
   const lastMessage = useMemo(() => {
     const messages = conversation.messages || [];
-    return messages[messages.length - 1];
+    const sortedMessages = messages.sort((a, b) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+    return sortedMessages[0];
   }, [conversation.messages]);
 
   const userEmail = useMemo(
@@ -37,13 +39,14 @@ export default function ConversationCard({
   );
 
   const numberOfNotifications = useMemo(() => {
-    if (!userEmail) return 0;
+    if (!userEmail || isOpen) return 0;
 
-    return conversation.messages.filter(
-      (msg) =>
-        !msg.seen.some((user) => user.email === session.data?.user.email),
+    const unseenMsgsNmbr = conversation.messages?.filter(
+      (msg) => !msg.seen.some((user) => user.email === userEmail),
     ).length;
-  }, [userEmail, conversation.messages, session.data?.user.email]);
+
+    return unseenMsgsNmbr;
+  }, [conversation.messages, userEmail, isOpen]);
 
   const lastMessageText = useMemo(() => {
     if (lastMessage?.image) return "Sent an image";

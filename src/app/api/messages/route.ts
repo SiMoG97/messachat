@@ -54,14 +54,14 @@ export async function POST(req: Request) {
     // Pusher
     await pusherServer.trigger(conversationId, "message:new", newMessage);
 
-    const lastMessage =
-      updatedConversation.messages[updatedConversation.messages.length - 1];
+    // const lastMessage =
+    //   updatedConversation.messages[updatedConversation.messages?.length - 1];
 
     updatedConversation.users.map((user) => {
       pusherServer
         .trigger(user.email!, "conversation:update", {
           id: conversationId,
-          messages: [lastMessage],
+          messages: [newMessage],
         })
         .catch(() => new Error("Something went wrong with pusher server"));
     });

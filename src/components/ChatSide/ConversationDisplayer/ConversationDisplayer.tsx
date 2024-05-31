@@ -120,7 +120,7 @@ export function ConversationDisplayer({
             time={format(new Date(message.createdAt), "p")}
           />
         ))}
-        <div className="pt-24" ref={scrollBottomRef} />
+        <div className=" pt-[1px]" ref={scrollBottomRef} />
       </div>
     </>
   );

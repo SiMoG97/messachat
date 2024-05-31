@@ -34,7 +34,7 @@ export async function POST(
       );
     });
 
-    if (unseenMessages.length === 0) {
+    if (unseenMessages.length === 0 || !unseenMessages) {
       return NextResponse.json(conversation);
     }
 
@@ -59,22 +59,22 @@ export async function POST(
       messages: [...updatedMessages],
     });
 
-    // updatedMessages.forEach(msg=>{
-    //   if(msg.seen.includes(currentUser))
-    // })
+    // if (
+    //   unseenMessages.every(
+    //     (unseenMsg) => unseenMsg.seenIds.indexOf(currentUser.id) !== -1,
+    //   )
+    // ) {
+    //   return NextResponse.json(conversation);
+    // }
+    // if()
 
-    const something = await pusherServer.trigger(
+    await pusherServer.trigger(
       conversationId,
       "message:update",
       updatedMessages,
     );
 
-    console.log("\n\n\n\n\n\n\n\n\n\n\n");
-    console.log(something);
-    console.log("\n\n\n\n\n\n\n\n\n\n\n");
-
     return NextResponse.json(updatedMessages);
-    // console.log(unseenMessages);
   } catch (error) {
     console.log(error, "ERROR_CONVERSATIONID_MESSAGES_SEEN");
     return new NextResponse("Internal Error", { status: 500 });
