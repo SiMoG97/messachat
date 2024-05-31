@@ -1,4 +1,5 @@
 import getCurrentUser from "@/actions/getCurrentUser";
+import { pusherServer } from "@/lib/pusher";
 import { db } from "@/server/db";
 import { NextResponse } from "next/server";
 
@@ -39,20 +40,26 @@ export async function POST(
 
     const updatedMessages = await Promise.all(
       unseenMessages.map((message) => {
-        console.log(
-          "\n\n\n\n\n\n\n\n\n\n",
-          unseenMessages.length,
-          "\n\n\n\n\n\n\n\n\n",
-        );
         return db.message.update({
           where: { id: message.id },
           include: { sender: true, seen: true },
           data: {
+            // seenIds: [...message.seenIds, currentUser.id],
             seen: { connect: { id: currentUser.id } },
+            seenIds: { push: currentUser.id },
           },
         });
       }),
     );
+
+    await pusherServer.trigger(currentUser.email, "conversation:update", {
+      id: conversationId,
+      messages: [...updatedMessages],
+    });
+
+    // updatedMessages.forEach(msg=>{
+    //   if(msg.seen.includes(currentUser))
+    // })
 
     return NextResponse.json(updatedMessages);
     // console.log(unseenMessages);

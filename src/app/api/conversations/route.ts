@@ -43,6 +43,7 @@ export async function POST(req: Request) {
               { id: currentUser.id },
             ],
           },
+          userIds: [...(members ?? []).map((m) => m.id), currentUser.id],
         },
         include: { users: true },
       });
@@ -50,6 +51,9 @@ export async function POST(req: Request) {
       return NextResponse.json(newConversation);
     }
 
+    if (!userId) {
+      return new NextResponse("Invalid Data", { status: 400 });
+    }
     // find a unique conversation between two people not a group Conversation
     const privateConversation = await db.conversation.findFirst({
       where: {
@@ -69,6 +73,7 @@ export async function POST(req: Request) {
     const newPrivateConversation = await db.conversation.create({
       data: {
         users: { connect: [{ id: currentUser.id }, { id: userId }] },
+        userIds: [currentUser.id, userId],
       },
       include: { users: true },
     });

@@ -37,13 +37,17 @@ export function ConversationDisplayer({
   const otherUser = useSelectOtherUser(conversation);
 
   useEffect(() => {
+    console.log("hmmm its working somehow");
     if (typeof conversationId !== "string") return;
 
     axios
       .post(`/api/conversations/${conversationId}/seen`)
-      .then((res) => console.log(res))
+      .then((res) => {
+        router.refresh();
+        console.log(res);
+      })
       .catch((err) => console.error(err));
-  }, [conversationId]);
+  }, [conversationId, router, messages]);
 
   useEffect(() => {
     if (typeof conversationId !== "string") return;
@@ -62,7 +66,10 @@ export function ConversationDisplayer({
 
       axios
         .post(`/api/conversations/${conversationId}/seen`)
-        .then((res) => console.log(res))
+        .then((res) => {
+          router.refresh();
+          console.log(res);
+        })
         .catch((err) => console.error(err));
     };
 
@@ -72,7 +79,7 @@ export function ConversationDisplayer({
       pusherClient.unsubscribe(conversationId);
       pusherClient.unbind("messages:new", messageHandler);
     };
-  }, [conversationId]);
+  }, [conversationId, router]);
 
   const hadnleSeenStatus = (message: MessageType) => {
     const filterredSeen = message.seen
