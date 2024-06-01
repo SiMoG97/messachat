@@ -38,24 +38,24 @@ export function ContactsAside({
           label: "New group",
           clickHandler: () => setAsideShow("newGroup"),
         },
-        {
-          label: "New community",
-          clickHandler: () => {
-            return;
-          },
-        },
-        {
-          label: "Starred messages",
-          clickHandler: () => {
-            return;
-          },
-        },
-        {
-          label: "Select chats",
-          clickHandler: () => {
-            return;
-          },
-        },
+        // {
+        //   label: "New community",
+        //   clickHandler: () => {
+        //     return;
+        //   },
+        // },
+        // {
+        //   label: "Starred messages",
+        //   clickHandler: () => {
+        //     return;
+        //   },
+        // },
+        // {
+        //   label: "Select chats",
+        //   clickHandler: () => {
+        //     return;
+        //   },
+        // },
         {
           label: "Settings",
           clickHandler: () => setAsideShow("settings"),
@@ -100,12 +100,7 @@ export function ContactsAside({
                 </Button>
               </>
             </Header>
-            {/* {conversations.map((conversation) => (
-              <ConversationCard
-                key={conversation.id}
-                conversation={conversation}
-              />
-            ))} */}
+
             <ConversationList initConversations={conversations} />
           </>
         )}

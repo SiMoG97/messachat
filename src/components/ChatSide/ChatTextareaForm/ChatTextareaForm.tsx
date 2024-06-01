@@ -135,8 +135,9 @@ export function ChatTextareaForm({
           options={{ maxFiles: 1 }}
           onSuccess={handleUploadImage}
           uploadPreset="lr97df2p"
+          className="place-self-end px-[2px] py-[8px]"
         >
-          <span className=" relative top-[1px] text-grey-100">
+          <span className=" relative  text-grey-100">
             <AddPhotoIcon />
           </span>
         </CldUploadButton>

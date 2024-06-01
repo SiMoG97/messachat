@@ -36,7 +36,7 @@ export default function ConversationList({
       setConversations((prev) =>
         prev.map((conv) => {
           if (conv.id === conversation.id) {
-            const newMessages = [...conv?.messages];
+            const newMessages = [...(conv?.messages ?? [])];
 
             conversation.messages.forEach((msg) => {
               const prevMsgIndex = newMessages.findIndex(

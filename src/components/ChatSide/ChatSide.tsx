@@ -46,54 +46,54 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
           setContactInfoIsOpen(true);
         },
       },
-      {
-        label: "Select messages",
-        clickHandler: () => {
-          console.log("not working yet");
-        },
-      },
+      // {
+      //   label: "Select messages",
+      //   clickHandler: () => {
+      //     console.log("not working yet");
+      //   },
+      // },
       {
         label: "Close chat",
         clickHandler: () => {
           router.push("/");
         },
       },
+      // {
+      //   label: "Mute notifications",
+      //   clickHandler: () => {
+      //     console.log("not working yet");
+      //   },
+      // },
+      // {
+      //   label: "Disappearing messages",
+      //   clickHandler: () => {
+      //     console.log("not working yet");
+      //   },
+      // },
+      // {
+      //   label: "Clear chat",
+      //   clickHandler: () => {
+      //     console.log("not working yet");
+      //   },
+      // },
       {
-        label: "Mute notifications",
-        clickHandler: () => {
-          console.log("not working yet");
-        },
-      },
-      {
-        label: "Disappearing messages",
-        clickHandler: () => {
-          console.log("not working yet");
-        },
-      },
-      {
-        label: "Clear chat",
-        clickHandler: () => {
-          console.log("not working yet");
-        },
-      },
-      {
-        label: "Delete chat",
+        label: conversation.isGroup ? "Delete group" : "Delete chat",
         clickHandler: () => {
           setDialogOpen(true);
         },
       },
-      {
-        label: "Report",
-        clickHandler: () => {
-          console.log("not working yet");
-        },
-      },
-      {
-        label: "Block",
-        clickHandler: () => {
-          console.log("not working yet");
-        },
-      },
+      // {
+      //   label: "Report",
+      //   clickHandler: () => {
+      //     console.log("not working yet");
+      //   },
+      // },
+      // {
+      //   label: "Block",
+      //   clickHandler: () => {
+      //     console.log("not working yet");
+      //   },
+      // },
     ],
     [router, conversation.isGroup],
   );
