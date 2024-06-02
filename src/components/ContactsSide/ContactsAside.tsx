@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Header } from "../ui/Header";
 import { ContactsSlider } from "./ContactsSlider";
@@ -27,6 +27,9 @@ export function ContactsAside({
   const [conversations, setConversations] = useState(initConversations);
   const session = useSession();
 
+  useEffect(() => {
+    setConversations(() => [...initConversations]);
+  }, [initConversations]);
   const [contactsSliderOpen, setContactsSliderOpen] = useState(false);
   const [asideShow, setAsideShow] = useState<
     "contacts" | "conversations" | "settings" | "newGroup"
@@ -101,7 +104,10 @@ export function ContactsAside({
               </>
             </Header>
 
-            <ConversationList initConversations={conversations} />
+            <ConversationList
+              conversations={conversations}
+              setConversations={setConversations}
+            />
           </>
         )}
         {asideShow === "contacts" && (

@@ -44,8 +44,7 @@ export function CircleImage({
         src={isGroup ? groupImg : src ?? pp_placeholder}
         alt={alt}
         className="object-cover"
-        objectFit="cover"
-        layout="fill"
+        fill
       />
       {children && children}
     </div>

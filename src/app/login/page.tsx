@@ -21,7 +21,7 @@ export default async function LoginPage() {
 
       <div className="relative hidden flex-col px-8 py-4 lg:flex">
         <div>
-          <h1 className=" text-green  flex gap-3 font-semibold">
+          <h1 className=" flex  gap-3 font-semibold text-green">
             <FaWhatsapp className="text-[36px]" />
             <span className="text-[24px]">Messachat</span>
           </h1>
@@ -31,14 +31,15 @@ export default async function LoginPage() {
             <Image
               src="/login_bg.png"
               alt="login_bg.png"
-              objectFit="cover"
-              layout="fill"
+              // objectFit="cover"
+              // layout="fill"
+              fill
             />
             <div className="absolute inset-0 bg-[#00000096]"></div>
           </div>
           <div className=" text-white-100">
             <h1 className="text-xl leading-none">Message privately</h1>
-            <h2 className="text-lg my-8">
+            <h2 className="my-8 text-lg">
               Simple, reliable, private messaging and, <br />
               available all over the world.
             </h2>

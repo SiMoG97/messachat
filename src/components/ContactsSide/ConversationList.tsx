@@ -8,13 +8,14 @@ import { useConversation } from "@/Hooks";
 import { useRouter } from "next/navigation";
 
 export default function ConversationList({
-  initConversations,
+  conversations,
+  setConversations,
 }: {
-  initConversations: ConversationType[];
+  conversations: ConversationType[];
+  setConversations: React.Dispatch<React.SetStateAction<ConversationType[]>>;
 }) {
   const session = useSession();
   const { conversationId } = useConversation();
-  const [conversations, setConversations] = useState(initConversations);
   const router = useRouter();
   const pusherKey = useMemo(
     () => session.data?.user.email,
