@@ -1,10 +1,9 @@
 import { type ConversationType } from "@/types";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import ConversationCard from "./ConversationCard";
 import { useSession } from "next-auth/react";
 import { pusherClient } from "@/lib/pusher";
-import { find, findIndex } from "lodash";
-import { useConversation } from "@/Hooks";
+import { find } from "lodash";
 import { useRouter } from "next/navigation";
 
 export default function ConversationList({
@@ -15,7 +14,6 @@ export default function ConversationList({
   setConversations: React.Dispatch<React.SetStateAction<ConversationType[]>>;
 }) {
   const session = useSession();
-  const { conversationId } = useConversation();
   const router = useRouter();
   const pusherKey = useMemo(
     () => session.data?.user.email,
@@ -77,7 +75,7 @@ export default function ConversationList({
       pusherClient.unbind("conversation:update", updateConvHandler);
       pusherClient.bind("conversation:remove", removeConvHandler);
     };
-  }, [pusherKey, router]);
+  }, [pusherKey, router, setConversations]);
   return (
     <>
       {conversations.map((conversation) => (

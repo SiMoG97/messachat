@@ -12,15 +12,10 @@ import { useToast } from "../ui/use-toast";
 
 type ContactsSlider = {
   contacts: User[];
-  isOpen: boolean;
   closeHandler: () => void;
 };
 
-export function ContactsSlider({
-  contacts,
-  closeHandler,
-  isOpen,
-}: ContactsSlider) {
+export function ContactsSlider({ contacts, closeHandler }: ContactsSlider) {
   const router = useRouter();
   const { toast } = useToast();
   const hadnleClick = useCallback(

@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import React, { useCallback, useMemo, useState } from "react";
-import { useConversation } from "@/Hooks";
+import { useConversation, useOnlineMembers } from "@/Hooks";
 import { useRouter } from "next/navigation";
 import type { User, Conversation } from "@prisma/client";
 import type { MessageType } from "@/types";
@@ -29,15 +29,15 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
   const [contactInfoIsOpen, setContactInfoIsOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const { members } = useOnlineMembers();
   const { toast } = useToast();
+
+  const isOnline = members.indexOf(otherUser.email!) !== -1;
 
   const closeContactInfoHandler = () => {
     if (dialogOpen) return;
     setContactInfoIsOpen(false);
   };
-  // const deleteChatHandler = () => {
-  //   console.log("chat deleted");
-  // };
   const dropDownItems: MenuItemT[] = useMemo(
     () => [
       {
@@ -103,7 +103,8 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
       const numberOfMembers = conversation.users.length;
       return `${numberOfMembers} memeber${numberOfMembers !== 1 ? "s" : ""}`;
     }
-  }, [conversation.isGroup, conversation.users.length]);
+    return isOnline ? "Online" : undefined;
+  }, [conversation.isGroup, conversation.users.length, isOnline]);
 
   const deleteCoversationHandler = useCallback(() => {
     console.log("clicked");

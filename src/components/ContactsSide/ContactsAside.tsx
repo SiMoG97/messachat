@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Header } from "../ui/Header";
 import { ContactsSlider } from "./ContactsSlider";
@@ -9,7 +9,6 @@ import { signOut, useSession } from "next-auth/react";
 import { Button } from "../ui/button";
 import { GroupIcon, NewConversation } from "../SVGs";
 import { type ConversationType } from "@/types";
-import ConversationCard from "./ConversationCard";
 import { type MenuItemT } from "../ui/Dropdown";
 import SettingsAside from "./SettingsAside";
 import { NewGroupAside } from "./NewGroupAsiide";
@@ -27,10 +26,6 @@ export function ContactsAside({
   const [conversations, setConversations] = useState(initConversations);
   const session = useSession();
 
-  useEffect(() => {
-    setConversations(() => [...initConversations]);
-  }, [initConversations]);
-  const [contactsSliderOpen, setContactsSliderOpen] = useState(false);
   const [asideShow, setAsideShow] = useState<
     "contacts" | "conversations" | "settings" | "newGroup"
   >("conversations");
@@ -113,7 +108,6 @@ export function ContactsAside({
         {asideShow === "contacts" && (
           <ContactsSlider
             contacts={contacts}
-            isOpen={contactsSliderOpen}
             closeHandler={() => setAsideShow("conversations")}
           />
         )}

@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import "@/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
+import OnlineStatus from "./(site)/OnlineStatus";
 
 export const metadata = {
   title: "Messachat",
@@ -17,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
+        <OnlineStatus />
         {children}
         <Toaster />
       </body>

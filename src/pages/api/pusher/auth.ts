@@ -5,8 +5,8 @@ import { getServerSession } from "next-auth";
 import { z } from "zod";
 
 const BodySchema = z.object({
-  socketId: z.string(),
-  channel: z.string(),
+  socket_id: z.string(),
+  channel_name: z.string(),
 });
 
 export default async function handler(
@@ -16,11 +16,15 @@ export default async function handler(
   const session = await getServerSession(req, res, authOptions);
   if (!session?.user?.email) return res.status(401);
 
-  const { socketId, channel } = BodySchema.parse(req.body);
+  const { socket_id, channel_name } = BodySchema.parse(req.body);
 
-  const data = { user_id: session.user.id };
+  const data = { user_id: session.user.email };
 
-  const authResponse = pusherServer.authorizeChannel(socketId, channel, data);
+  const authResponse = pusherServer.authorizeChannel(
+    socket_id,
+    channel_name,
+    data,
+  );
 
   return res.send(authResponse);
 }

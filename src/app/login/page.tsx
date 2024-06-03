@@ -31,8 +31,7 @@ export default async function LoginPage() {
             <Image
               src="/login_bg.png"
               alt="login_bg.png"
-              // objectFit="cover"
-              // layout="fill"
+              className="object-cover"
               fill
             />
             <div className="absolute inset-0 bg-[#00000096]"></div>
