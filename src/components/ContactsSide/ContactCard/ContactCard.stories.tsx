@@ -9,6 +9,17 @@ const meta = {
   parameters: {
     layout: "fullscreeen",
   },
+  args: {
+    handleClick: () => {
+      return;
+    },
+    date: "5/11/2024",
+    name: "Simo Echaarani",
+    lastMessage: "Nice to meet you bro!",
+    notificationNumber: 0,
+    image: profilePicScr.src,
+  },
+
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
 
@@ -21,23 +32,14 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const WitoutNotification: Story = {
   args: {
-    selected: false,
     date: "5/11/2024",
-    username: "Simo Echaarani",
-    lastMessage: "Nice to meet you bro!",
-    notificationNumber: 0,
-    ppUrl: profilePicScr.src,
   },
 };
 
 export const WithNotification: Story = {
   args: {
-    selected: false,
     date: "11:33 AM",
-    username: "Simo Echaarani",
-    lastMessage: "Nice to meet you bro!",
     notificationNumber: 3,
-    ppUrl: profilePicScr.src,
   },
 };
 
@@ -45,18 +47,13 @@ export const Selected: Story = {
   args: {
     selected: true,
     date: "Friday",
-    username: "Simo Echaarani",
-    lastMessage: "Nice to meet you bro!",
     notificationNumber: 0,
-    ppUrl: profilePicScr.src,
   },
 };
 
 export const NoProfilePic: Story = {
   args: {
     date: "Yesterday",
-    username: "Simo Echaarani",
-    lastMessage: "Nice to meet you bro!",
-    notificationNumber: 0,
+    image: null,
   },
 };

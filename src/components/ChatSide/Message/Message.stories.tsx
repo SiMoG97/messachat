@@ -16,6 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 export const RightMessage: Story = {
   args: {
+    image: null,
     direction: "right",
     message: "salam salut cv wach n9der nchofk db ?",
   },
@@ -23,6 +24,7 @@ export const RightMessage: Story = {
 
 export const LeftMessage: Story = {
   args: {
+    image: null,
     direction: "left",
     message: "Chnahowa? goli be3da! n3ref be3da mnin nbda",
     status: "seen",

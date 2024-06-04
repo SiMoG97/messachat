@@ -25,6 +25,6 @@ const menuItems: MenuItemT[] = [
 ];
 export const ContactsDropdown: Story = {
   args: {
-    menuItems,
+    dropdownItems: menuItems,
   },
 };

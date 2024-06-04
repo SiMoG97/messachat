@@ -21,7 +21,7 @@ const meta = {
   title: "UI/Header",
   component: Header,
   args: {
-    menuItems,
+    dropdownItems: menuItems,
   },
   // tags:[""]
 } satisfies Meta<typeof Header>;
@@ -34,6 +34,6 @@ export const Default: Story = {};
 
 export const WithuserName: Story = {
   args: {
-    username: "Simo Echaarani",
+    name: "Simo Echaarani",
   },
 };

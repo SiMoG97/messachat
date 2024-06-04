@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ContactsAside, testUsers } from ".";
+import { ContactsAside } from ".";
 // import profilePicScr from "@/../public/pp.jpg";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
@@ -22,18 +22,13 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const WithContacts: Story = {
   args: {
-    // showContacts: true,
-    setShowContacts: () => {
-      return;
-    },
-    contacts: testUsers,
+    initConversations: [],
+    contacts: [],
   },
 };
 export const WithoutContacts: Story = {
   args: {
-    // showContacts: true,
-    setShowContacts: () => {
-      return;
-    },
+    initConversations: [],
+    contacts: [],
   },
 };

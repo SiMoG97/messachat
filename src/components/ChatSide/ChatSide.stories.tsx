@@ -15,18 +15,32 @@ type Story = StoryObj<typeof meta>;
 
 export const ChatIsClosed: Story = {
   args: {
-    setShowContacts: () => {
-      return;
+    conversation: {
+      id: "sajdlfjsdalkfsad",
+      createdAt: new Date(),
+      isGroup: true,
+      name: "best group",
+      users: [],
+      messagesIds: [],
+      lastMessageAt: new Date(),
+      userIds: [],
     },
-    showContacts: true,
+    messages: [],
   },
 };
 
 export const ChatIsOpen: Story = {
   args: {
-    setShowContacts: () => {
-      return;
+    conversation: {
+      id: "sajdlfjsdalkfsad",
+      createdAt: new Date(),
+      isGroup: true,
+      name: "best group",
+      users: [],
+      messagesIds: [],
+      lastMessageAt: new Date(),
+      userIds: [],
     },
-    showContacts: false,
+    messages: [],
   },
 };
