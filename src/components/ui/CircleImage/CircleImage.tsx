@@ -45,6 +45,7 @@ export function CircleImage({
         alt={alt}
         className="object-cover"
         fill
+        loading="lazy"
       />
       {children && children}
     </div>

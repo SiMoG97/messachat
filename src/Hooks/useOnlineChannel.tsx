@@ -21,7 +21,6 @@ export function useOnlineChannel() {
 
       // console.log("\n\n\n-----", members, "------\n\n\n");
       members.each((member: Member) => {
-        console.log("member:", member);
         initMembers.push(member.id);
       });
       set([...new Set(initMembers)]);

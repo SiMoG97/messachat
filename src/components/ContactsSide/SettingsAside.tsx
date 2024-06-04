@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Arrow, CheckIcon, EditPenIcon } from "../SVGs";
 import { CircleImage } from "../ui/CircleImage";
@@ -15,6 +15,7 @@ import axios from "axios";
 import { useToast } from "../ui/use-toast";
 import { type SettingsFormType, SettingsFromSchema } from "@/types";
 import { useRouter } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 type SettignsAsidePropsT = {
   closeHandler: () => void;
@@ -22,6 +23,7 @@ type SettignsAsidePropsT = {
 
 export default function SettingsAside({ closeHandler }: SettignsAsidePropsT) {
   const session = useSession();
+
   return (
     <div className="h-full w-full bg-grey-500">
       <div className="flex bg-grey-300">
@@ -37,6 +39,7 @@ export default function SettingsAside({ closeHandler }: SettignsAsidePropsT) {
 
       <SettingsImageForm initValue={session.data?.user.image ?? undefined} />
       <SettingsForm
+        key="changeNameKey123"
         title="Your name"
         name="name"
         description="This name will be visible to your Messachat contacts."
@@ -45,9 +48,10 @@ export default function SettingsAside({ closeHandler }: SettignsAsidePropsT) {
       />
 
       <SettingsForm
+        key="changeBioFormKey123"
         title="About"
         name="bio"
-        initValue={session.data?.user.bio}
+        initValue={session.data?.user.bio ?? ""}
         placeholder="Add About you"
         max={80}
       />
@@ -72,25 +76,34 @@ function SettingsForm({
 }) {
   const [openForm, setOpenForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState(initValue);
   const router = useRouter();
   const { toast } = useToast();
+  const session = useSession();
   const { handleSubmit, register, watch, reset } = useForm<SettingsFormType>({
     resolver: zodResolver(SettingsFromSchema),
     defaultValues: {
-      [name]: initValue,
+      [name]: useMemo(() => value, [value]),
     },
   });
+  useEffect(() => {
+    reset({ [name]: value });
+  }, [value, name, reset]);
 
   const onSubmit = (data: SettingsFormType) => {
     setIsLoading(true);
     axios
       .post<SettingsFormType>("/api/settings", data)
-      .then((res) => {
-        console.log(res);
+      .then(async (res) => {
+        setValue(res.data[name]);
+        reset({ [name]: value });
         router.refresh();
       })
       .catch((error) => {
         console.error(error);
+        // // setValue(initValue);
+        // console.log("so this is what happening");
+        // session.update({user})
         toast({
           title: "Something went wrong!",
           variant: "destructive",
@@ -107,7 +120,8 @@ function SettingsForm({
       <div className="mb-4">
         {!openForm && (
           <div className="flex h-[34px] items-center justify-between  pl-[1px] text-2md">
-            <div>{initValue ? initValue : placeholder}</div>
+            {/* <div>{initValue ? initValue : placeholder}</div> */}
+            <div>{value ? value : placeholder}</div>
             <div>
               <button
                 className="text-grey-100"
