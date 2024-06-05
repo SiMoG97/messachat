@@ -48,6 +48,7 @@ export function Message({
       className={cn(" mb-3  flex  md:px-16 md:pl-16 md:pr-16", {
         "message-right justify-end pl-12 pr-5 ": direction === "right",
         "message-left justify-start pl-5 pr-12 ": direction === "left",
+        "pl-11": isGroup,
       })}
     >
       <div
