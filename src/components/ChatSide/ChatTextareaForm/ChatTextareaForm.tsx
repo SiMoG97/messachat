@@ -123,10 +123,11 @@ export function ChatTextareaForm({
             <EmojiPicker
               open={emojiOpen}
               theme={Theme.DARK}
-              // ref={}
               onEmojiClick={({ emoji }) => {
                 const taValue = form.getValues("message") ?? "";
-                form.setValue("message", taValue + emoji);
+                form.setValue("message", taValue + emoji, {
+                  shouldValidate: true,
+                });
               }}
             />
           </div>
