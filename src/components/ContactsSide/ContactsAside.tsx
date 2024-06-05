@@ -98,11 +98,22 @@ export function ContactsAside({
                 </Button>
               </>
             </Header>
-
+            {conversations.length === 0 && (
+              <div className="flex h-full w-full items-center justify-center">
+                <button
+                  className="bg-primary p-2 px-3 font-semibold hover:bg-primary-200 hover:text-white-100"
+                  onClick={() => setAsideShow("contacts")}
+                >
+                  Start a new conversation
+                </button>
+              </div>
+            )}
+            {/* {conversations.length > 0 && ( */}
             <ConversationList
               conversations={conversations}
               setConversations={setConversations}
             />
+            {/* )} */}
           </>
         )}
         {asideShow === "contacts" && (

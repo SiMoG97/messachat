@@ -76,6 +76,7 @@ export default function ConversationList({
       pusherClient.bind("conversation:remove", removeConvHandler);
     };
   }, [pusherKey, router, setConversations]);
+
   return (
     <>
       {conversations.map((conversation) => (
