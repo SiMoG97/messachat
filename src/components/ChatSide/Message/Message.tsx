@@ -3,9 +3,10 @@ import {
   TailOutLeftticon,
   TailOutRighticon,
 } from "@/components/SVGs";
+import { CircleImage } from "@/components/ui/CircleImage";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 type MessagePropsT = {
   direction: "left" | "right";
@@ -13,6 +14,9 @@ type MessagePropsT = {
   image: string | null;
   time: string;
   status: "seen" | "delivered";
+  isGroup?: boolean | null;
+  username?: string | null;
+  userProfilePic?: string | null;
 };
 
 export function Message({
@@ -21,9 +25,26 @@ export function Message({
   time,
   status,
   image,
+  isGroup = null,
+  username = null,
+  userProfilePic,
 }: MessagePropsT) {
+  const [showUserDetails, setShowUserDetails] = useState(false);
+
+  const messageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const prevElmText =
+      messageRef.current?.previousElementSibling?.querySelector(
+        ".user-details",
+      )?.textContent;
+
+    setShowUserDetails(prevElmText === username);
+  }, [username]);
+
   return (
     <div
+      ref={messageRef}
       className={cn(" mb-3  flex  md:px-16 md:pl-16 md:pr-16", {
         "message-right justify-end pl-12 pr-5 ": direction === "right",
         "message-left justify-start pl-5 pr-12 ": direction === "left",
@@ -38,6 +59,22 @@ export function Message({
           },
         )}
       >
+        {direction === "left" && username && isGroup && (
+          <div
+            className={cn("user-details", {
+              hidden: showUserDetails,
+            })}
+          >
+            <CircleImage
+              size={"xsm"}
+              className="absolute left-0 top-0 translate-x-[-130%]"
+              src={userProfilePic}
+            />
+            <div className="text-2sm font-semibold text-[#a5b337]">
+              {username}
+            </div>
+          </div>
+        )}
         <span className="relative whitespace-pre-wrap break-words text-4sm text-white-100">
           {message && message}
           {image && (

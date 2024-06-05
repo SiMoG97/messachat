@@ -93,6 +93,9 @@
 }
 
 @layer components {
+  /* .user-detauls {
+    display: none;
+  } */
   .message-right + .message-left > div,
   .message-left:nth-child(1) > div {
     border-top-left-radius: 0;
@@ -103,14 +106,16 @@
   }
   .message-left + .message-right .tail-icon-span,
   .message-right:nth-child(1) .tail-icon-span {
-    /* @apply block; */
     display: block;
   }
   .message-right + .message-left .tail-icon-span,
   .message-left:nth-child(1) .tail-icon-span {
-    /* @apply block; */
     display: block;
   }
+  /* .message-right + .message-left .user-details,
+  .message-left:nth-child(1) .user-details {
+    display: block;
+  } */
 }
 
 /* Custom scrollbar styling */

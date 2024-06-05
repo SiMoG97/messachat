@@ -118,6 +118,9 @@ export function ConversationDisplayer({
             image={message.image}
             status={hadnleSeenStatus(message)}
             time={format(new Date(message.createdAt), "p")}
+            isGroup={conversation.isGroup}
+            username={message.sender.name}
+            userProfilePic={message.sender.image}
           />
         ))}
         <div className=" pt-[1px]" ref={scrollBottomRef} />

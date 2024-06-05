@@ -73,7 +73,6 @@ export function ChatSide({ conversation, messages }: ChatSidePropsT) {
   }, [conversation.isGroup, conversation.users.length, isOnline]);
 
   const deleteCoversationHandler = useCallback(() => {
-    console.log("clicked");
     setIsDeleteLoading(true);
     axios
       .delete(`/api/conversations/${conversation.id}`)
