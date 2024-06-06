@@ -11,6 +11,10 @@ import { SignInButton } from "./components/SignInButton";
 import { getServerAuthSession } from "@/server/auth";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: "Messachat - Login",
+};
+
 export default async function LoginPage() {
   const session = await getServerAuthSession();
   if (session) return redirect("/");
@@ -21,8 +25,16 @@ export default async function LoginPage() {
 
       <div className="relative hidden flex-col px-8 py-4 lg:flex">
         <div>
-          <h1 className=" flex  gap-3 font-semibold text-green">
-            <FaWhatsapp className="text-[36px]" />
+          <h1 className=" flex items-center  gap-3 font-semibold text-green">
+            {/* <FaWhatsapp className="text-[36px]" /> */}
+            <div>
+              <Image
+                src="/messachat-logo.png"
+                alt="messachat logo"
+                width={32}
+                height={"100"}
+              />
+            </div>
             <span className="text-[24px]">Messachat</span>
           </h1>
         </div>
