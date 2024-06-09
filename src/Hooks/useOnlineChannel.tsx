@@ -19,7 +19,6 @@ export function useOnlineChannel() {
     channel.bind("pusher:subscription_succeeded", (members: Members) => {
       const initMembers: string[] = [];
 
-      // console.log("\n\n\n-----", members, "------\n\n\n");
       members.each((member: Member) => {
         initMembers.push(member.id);
       });

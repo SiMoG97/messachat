@@ -29,10 +29,10 @@ export default async function LoginPage() {
             {/* <FaWhatsapp className="text-[36px]" /> */}
             <div>
               <Image
-                src="/messachat-logo.png"
+                src="/messachat-logo.svg"
                 alt="messachat logo"
-                width={32}
-                height={"100"}
+                width={40}
+                height={40}
               />
             </div>
             <span className="text-[24px]">Messachat</span>
@@ -63,7 +63,13 @@ export default async function LoginPage() {
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
             <h1 className=" flex  justify-center gap-3 font-semibold text-white-100 lg:hidden">
-              <FaWhatsapp className="text-[48px]" />
+              {/* <FaWhatsapp className="text-[48px]" /> */}
+              <Image
+                src="/messachat-white-logo.svg"
+                width={40}
+                height={40}
+                alt="Messachat logo"
+              />
               <span className="text-[32px]">Messachat</span>
             </h1>
             <p className="text-balance text-muted-foreground">
