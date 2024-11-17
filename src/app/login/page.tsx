@@ -1,12 +1,6 @@
 import Image from "next/image";
 
-import {
-  FaGoogle,
-  FaFacebook,
-  FaWhatsapp,
-  FaDiscord,
-  FaGithub,
-} from "react-icons/fa";
+import { FaGoogle, FaFacebook, FaDiscord, FaGithub } from "react-icons/fa";
 import { SignInButton } from "./components/SignInButton";
 import { getServerAuthSession } from "@/server/auth";
 import { redirect } from "next/navigation";

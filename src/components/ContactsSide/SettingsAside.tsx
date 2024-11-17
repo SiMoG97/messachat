@@ -114,7 +114,6 @@ function SettingsForm({
   const [value, setValue] = useState(initValue);
   const router = useRouter();
   const { toast } = useToast();
-  const session = useSession();
   const { handleSubmit, register, watch, reset } = useForm<SettingsFormType>({
     resolver: zodResolver(SettingsFromSchema),
     defaultValues: {
@@ -216,6 +215,7 @@ function SettingsImageForm({ initValue = "" }: { initValue?: string }) {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  console.log(isLoading);
   const formRef = useRef<HTMLFormElement>(null);
 
   const { handleSubmit, watch, setValue } = useForm<SettingsFormType>({

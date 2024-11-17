@@ -4,7 +4,6 @@ import { ContactCard } from "./ContactCard";
 import { type ConversationType } from "@/types";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { format } from "date-fns";
 
 import { useSelectOtherUser } from "@/Hooks/useSelectOtherUser";
 import { useConversation } from "@/Hooks";
