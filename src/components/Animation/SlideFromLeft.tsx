@@ -24,7 +24,6 @@ const anim = (variants: Variants, custom: number) => {
     exit: "initial",
     variants,
     custom,
-    // viewport: { once: true, margin: "0px 0px -200px 0px" },
   };
 };
 

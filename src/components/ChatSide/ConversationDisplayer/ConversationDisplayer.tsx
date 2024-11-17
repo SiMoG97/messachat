@@ -109,21 +109,13 @@ export function ConversationDisplayer({
       <div className="overflow-y-auto py-5">
         {messages.map((message, i, arr) => (
           <>
-            {i === 0 && (
-              <DisplayDate
-                date={format(new Date(message.createdAt), "MM/dd/yyyy")}
-              />
-            )}
+            {i === 0 && <DisplayDate date={message.createdAt} />}
 
             {i > 0 &&
               !isSameDay(
                 new Date(arr[i - 1]!.createdAt),
                 new Date(message.createdAt),
-              ) && (
-                <DisplayDate
-                  date={format(new Date(message.createdAt), "MM/dd/yyyy")}
-                />
-              )}
+              ) && <DisplayDate date={message.createdAt} />}
             <Message
               key={message.id}
               direction={

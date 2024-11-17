@@ -6,10 +6,13 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDate(date: Date) {
+export function formatDate(date: number | string | Date, time = true) {
   const parsedDate = new Date(date);
 
   if (isToday(parsedDate)) {
+    if (!time) {
+      return "Today";
+    }
     return format(parsedDate, "p"); // Shows time, e.g., 3:45 PM
   }
 
