@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Message } from "../Message";
 import { type MessageType } from "@/types";
 import { useCloseWithEscape, useConversation } from "@/Hooks";
-import { format } from "date-fns";
+import { format, isSameDay } from "date-fns";
 import { useSelectOtherUser } from "@/Hooks/useSelectOtherUser";
 import { useSession } from "next-auth/react";
 import { type User, type Conversation } from "@prisma/client";
@@ -10,6 +10,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { pusherClient } from "@/lib/pusher";
 import { find } from "lodash";
+import { DisplayDate } from "../DisplayDate";
 
 type ConversationDisplayerPropsT = {
   initMessages: MessageType[];
@@ -106,22 +107,39 @@ export function ConversationDisplayer({
 
       {/* conversation */}
       <div className="overflow-y-auto py-5">
-        {messages.map((message) => (
-          <Message
-            key={message.id}
-            direction={
-              message.sender.email === session.data?.user.email
-                ? "right"
-                : "left"
-            }
-            message={message.body}
-            image={message.image}
-            status={hadnleSeenStatus(message)}
-            time={format(new Date(message.createdAt), "p")}
-            isGroup={conversation.isGroup}
-            username={message.sender.name}
-            userProfilePic={message.sender.image}
-          />
+        {messages.map((message, i, arr) => (
+          <>
+            {i === 0 && (
+              <DisplayDate
+                date={format(new Date(message.createdAt), "MM/dd/yyyy")}
+              />
+            )}
+
+            {i > 0 &&
+              !isSameDay(
+                new Date(arr[i - 1]!.createdAt),
+                new Date(message.createdAt),
+              ) && (
+                <DisplayDate
+                  date={format(new Date(message.createdAt), "MM/dd/yyyy")}
+                />
+              )}
+            <Message
+              key={message.id}
+              direction={
+                message.sender.email === session.data?.user.email
+                  ? "right"
+                  : "left"
+              }
+              message={message.body}
+              image={message.image}
+              status={hadnleSeenStatus(message)}
+              time={format(new Date(message.createdAt), "p")}
+              isGroup={conversation.isGroup}
+              username={message.sender.name}
+              userProfilePic={message.sender.image}
+            />
+          </>
         ))}
         <div className=" pt-[1px]" ref={scrollBottomRef} />
       </div>

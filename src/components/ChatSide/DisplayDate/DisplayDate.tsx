@@ -6,7 +6,7 @@ type DisplayPropsT = {
 
 export function DisplayDate({ date }: DisplayPropsT) {
   return (
-    <div className="text-2.5sm bg-grey-700 grey mb-3 rounded-[7.5px] px-3 py-[5px] uppercase text-grey-100">
+    <div className="z-1 relative mx-auto mb-3 w-fit rounded-[7.5px] bg-grey-700 px-3 py-[5px] text-2.5sm uppercase text-grey-100">
       {date}
     </div>
   );

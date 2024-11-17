@@ -8,6 +8,7 @@ import { format } from "date-fns";
 
 import { useSelectOtherUser } from "@/Hooks/useSelectOtherUser";
 import { useConversation } from "@/Hooks";
+import { formatDate } from "@/lib/utils";
 
 type ConversationCardPropsT = {
   conversation: ConversationType;
@@ -63,7 +64,7 @@ export default function ConversationCard({
         notificationNumber={numberOfNotifications}
         date={
           lastMessage?.createdAt
-            ? format(new Date(lastMessage.createdAt), "p")
+            ? formatDate(new Date(lastMessage.createdAt))
             : ""
         }
         handleClick={handleClick}
