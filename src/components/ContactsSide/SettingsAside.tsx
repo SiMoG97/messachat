@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useAnimate, motion, stagger } from "framer-motion";
 import { Button } from "../ui/button";
 import { Arrow, CheckIcon, EditPenIcon } from "../SVGs";
 import { CircleImage } from "../ui/CircleImage";
@@ -24,6 +25,27 @@ type SettignsAsidePropsT = {
 
 export default function SettingsAside({ closeHandler }: SettignsAsidePropsT) {
   const session = useSession();
+  const [scope, animate] = useAnimate();
+
+  useEffect(() => {
+    if (!scope.current) return;
+    const duration = 0.15;
+    const enterAnimation = async () => {
+      await animate(
+        ".profile-image-wrapper",
+        { scale: 1 },
+        { duration, delay: 0.3 },
+      );
+
+      await animate(
+        ".settings-forms > div",
+        { opacity: 1, y: 0 },
+        { ease: "easeIn", duration, delay: stagger(duration) },
+      );
+    };
+
+    enterAnimation().catch((e) => console.log(e));
+  }, [scope, animate]);
 
   return (
     <SlideInAnimWrapper className="absolute top-0 h-full w-full bg-grey-500">
@@ -38,24 +60,36 @@ export default function SettingsAside({ closeHandler }: SettignsAsidePropsT) {
         </div>
       </div>
 
-      <SettingsImageForm initValue={session.data?.user.image ?? undefined} />
-      <SettingsForm
-        key="changeNameKey123"
-        title="Your name"
-        name="name"
-        description="This name will be visible to your Messachat contacts."
-        initValue={session.data?.user.name ?? ""}
-        max={25}
-      />
+      <div ref={scope}>
+        <motion.div className="profile-image-wrapper my-7" style={{ scale: 0 }}>
+          <SettingsImageForm
+            initValue={session.data?.user.image ?? undefined}
+          />
+        </motion.div>
+        <motion.div className="settings-forms">
+          <motion.div style={{ opacity: 0, y: 50 }}>
+            <SettingsForm
+              key="changeNameKey123"
+              title="Your name"
+              name="name"
+              description="This name will be visible to your Messachat contacts."
+              initValue={session.data?.user.name ?? ""}
+              max={25}
+            />
+          </motion.div>
 
-      <SettingsForm
-        key="changeBioFormKey123"
-        title="About"
-        name="bio"
-        initValue={session.data?.user.bio ?? ""}
-        placeholder="Add About you"
-        max={80}
-      />
+          <motion.div style={{ opacity: 0, y: 20 }}>
+            <SettingsForm
+              key="changeBioFormKey123"
+              title="About"
+              name="bio"
+              initValue={session.data?.user.bio ?? ""}
+              placeholder="Add About you"
+              max={80}
+            />
+          </motion.div>
+        </motion.div>
+      </div>
     </SlideInAnimWrapper>
   );
 }
@@ -227,7 +261,7 @@ function SettingsImageForm({ initValue = "" }: { initValue?: string }) {
   };
   const image = watch("image");
   return (
-    <div className="flex justify-center py-7">
+    <div className="flex justify-center">
       <form onSubmit={handleSubmit(onSubmit)} ref={formRef}>
         <CircleImage size={"xl"} className="relative" src={image ?? initValue}>
           <div className="absolute h-full w-full cursor-pointer rounded-full bg-[#00000091] opacity-0 hover:opacity-100">
