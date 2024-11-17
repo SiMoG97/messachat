@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Header } from "../ui/Header";
 import { ContactsSlider } from "./ContactsSlider";
@@ -72,67 +73,73 @@ export function ContactsAside({
       )}
     >
       <div className="relative h-full">
-        {asideShow === "conversations" && (
-          <>
-            <Header
-              dropdownItems={contactNavItems}
-              image={session.data?.user.image}
-              profileClick={() => setAsideShow("settings")}
-            >
-              <>
-                <Button
-                  variant={"rounded"}
-                  onClick={() => setAsideShow("newGroup")}
-                >
-                  <span className="text-grey-100">
-                    <GroupIcon />
-                  </span>
-                </Button>
-                <Button
-                  variant={"rounded"}
-                  onClick={() => setAsideShow("contacts")}
-                >
-                  <span className="text-grey-100">
-                    <NewConversation />
-                  </span>
-                </Button>
-              </>
-            </Header>
-            {conversations.length === 0 && (
-              <div className="flex h-full w-full items-center justify-center">
-                <button
-                  className="bg-primary p-2 px-3 font-semibold hover:bg-primary-200 hover:text-white-100"
-                  onClick={() => setAsideShow("contacts")}
-                >
-                  Start a new conversation
-                </button>
-              </div>
-            )}
-            {/* {conversations.length > 0 && ( */}
-            <ConversationList
-              conversations={conversations}
-              setConversations={setConversations}
+        <div>
+          <Header
+            dropdownItems={contactNavItems}
+            image={session.data?.user.image}
+            profileClick={() => setAsideShow("settings")}
+          >
+            <>
+              <Button
+                variant={"rounded"}
+                onClick={() => setAsideShow("newGroup")}
+              >
+                <span className="text-grey-100">
+                  <GroupIcon />
+                </span>
+              </Button>
+              <Button
+                variant={"rounded"}
+                onClick={() => setAsideShow("contacts")}
+              >
+                <span className="text-grey-100">
+                  <NewConversation />
+                </span>
+              </Button>
+            </>
+          </Header>
+          {conversations.length === 0 && (
+            <div className="flex h-full w-full items-center justify-center">
+              <button
+                className="bg-primary p-2 px-3 font-semibold hover:bg-primary-200 hover:text-white-100"
+                onClick={() => setAsideShow("contacts")}
+              >
+                Start a new conversation
+              </button>
+            </div>
+          )}
+          {/* {conversations.length > 0 && ( */}
+          <ConversationList
+            conversations={conversations}
+            setConversations={setConversations}
+          />
+          {/* )} */}
+        </div>
+
+        <AnimatePresence initial={false}>
+          {asideShow === "contacts" && (
+            <ContactsSlider
+              key="contacts"
+              contacts={contacts}
+              closeHandler={() => setAsideShow("conversations")}
             />
-            {/* )} */}
-          </>
-        )}
-        {asideShow === "contacts" && (
-          <ContactsSlider
-            contacts={contacts}
-            closeHandler={() => setAsideShow("conversations")}
-          />
-        )}
+          )}
 
-        {asideShow === "settings" && (
-          <SettingsAside closeHandler={() => setAsideShow("conversations")} />
-        )}
+          {asideShow === "settings" && (
+            <SettingsAside
+              key="settings"
+              closeHandler={() => setAsideShow("conversations")}
+            />
+          )}
 
-        {asideShow === "newGroup" && (
-          <NewGroupAside
-            closeHandler={() => setAsideShow("conversations")}
-            contacts={contacts}
-          />
-        )}
+          {asideShow === "newGroup" && (
+            <NewGroupAside
+              key="newGroup"
+              closeHandler={() => setAsideShow("conversations")}
+              contacts={contacts}
+            />
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

@@ -15,7 +15,8 @@ import axios from "axios";
 import { useToast } from "../ui/use-toast";
 import { type SettingsFormType, SettingsFromSchema } from "@/types";
 import { useRouter } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { SlideInAnimWrapper } from "../Animation/SlideFromLeft";
+// import { revalidatePath } from "next/cache";
 
 type SettignsAsidePropsT = {
   closeHandler: () => void;
@@ -25,7 +26,7 @@ export default function SettingsAside({ closeHandler }: SettignsAsidePropsT) {
   const session = useSession();
 
   return (
-    <div className="h-full w-full bg-grey-500">
+    <SlideInAnimWrapper className="absolute top-0 h-full w-full bg-grey-500">
       <div className="flex bg-grey-300">
         <div className="mt-[50px] flex items-center gap-3 px-2 py-3 text-5md font-medium text-white-100">
           <Button variant={"rounded"} onClick={closeHandler}>
@@ -55,7 +56,7 @@ export default function SettingsAside({ closeHandler }: SettignsAsidePropsT) {
         placeholder="Add About you"
         max={80}
       />
-    </div>
+    </SlideInAnimWrapper>
   );
 }
 

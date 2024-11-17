@@ -9,6 +9,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { type User, type Conversation } from "@prisma/client";
 import { useToast } from "../ui/use-toast";
+import { SlideInAnimWrapper } from "../Animation/SlideFromLeft";
 
 type ContactsSlider = {
   contacts: User[];
@@ -46,7 +47,9 @@ export function ContactsSlider({ contacts, closeHandler }: ContactsSlider) {
     [router, toast],
   );
   return (
-    <div className={cn(" h-full w-full bg-grey-600 ")}>
+    <SlideInAnimWrapper
+      className={cn(" absolute top-0 h-full w-full bg-grey-600 ")}
+    >
       <div className="flex bg-grey-300">
         <div className="mt-[50px] flex items-center gap-3 px-2 py-3 text-5md font-medium text-white-100">
           <Button variant={"rounded"} onClick={closeHandler}>
@@ -69,6 +72,6 @@ export function ContactsSlider({ contacts, closeHandler }: ContactsSlider) {
           />
         </div>
       ))}
-    </div>
+    </SlideInAnimWrapper>
   );
 }

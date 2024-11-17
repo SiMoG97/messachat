@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "../ui/use-toast";
+import { SlideInAnimWrapper } from "../Animation/SlideFromLeft";
 
 type NewGroupAsidePropsT = {
   // contacts: User[];
@@ -83,7 +84,9 @@ export function NewGroupAside({
   };
 
   return (
-    <div className={cn(" flex h-full w-full flex-col bg-grey-500")}>
+    <SlideInAnimWrapper
+      className={cn(" absolute top-0 flex h-full w-full flex-col bg-grey-500")}
+    >
       {/* Header */}
       <div className="flex  bg-grey-300">
         <div className="mt-[50px] flex items-center gap-3 px-2 py-3 text-5md font-medium text-white-100">
@@ -146,7 +149,7 @@ export function NewGroupAside({
           )}
         </div>
       </form>
-    </div>
+    </SlideInAnimWrapper>
   );
 }
 
